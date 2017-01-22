@@ -1,0 +1,42 @@
+<?xml version="1.0" encoding="utf-8" standalone="yes" ?>
+<rss version="2.0" xmlns:atom="http://www.w3.org/2005/Atom">
+    <channel>
+        <title>Posts on LONG LI</title>
+        <link>https://longlizl.github.io/post/</link>
+        <language>zh-CN</language>
+        <author>CoderZh</author>
+        <rights>Copyright (c) 2015, CoderZh; all rights reserved.</rights>
+        <updated>Fri, 20 Jan 2017 14:18:54 CST</updated>
+        
+        <item>
+            <title>GIT安装与使用</title>
+            <link>https://longlizl.github.io/post/2017/%E6%88%91%E7%9A%84%E7%AC%AC%E4%B8%80%E7%AF%87%E6%96%87%E6%A1%A3/</link>
+            <pubDate>Fri, 20 Jan 2017 14:18:54 CST</pubDate>
+            <author>CoderZh</author>
+            <guid>https://longlizl.github.io/post/2017/%E6%88%91%E7%9A%84%E7%AC%AC%E4%B8%80%E7%AF%87%E6%96%87%E6%A1%A3/</guid>
+            <description>
+
+&lt;p&gt;第一次接触&lt;a href=&#34;http://www.liaoxuefeng.com/wiki/0013739516305929606dd18361248578c67b8067c8c017b000&#34;&gt;&lt;strong&gt;git&lt;/strong&gt;&lt;/a&gt;分布式版本控制系统简单快速的功能给吸引住了！废话不多说了让我们来看下
+它在windows下安装。&lt;/p&gt;
+
+&lt;h3 id=&#34;在windows上安装git&#34;&gt;在Windows上安装Git&lt;/h3&gt;
+
+&lt;ul&gt;
+&lt;li&gt;请点击&lt;a href=&#34;https://git-for-windows.github.io&#34;&gt;git&lt;/a&gt;下载安装包或去官网下载安装包。&lt;/li&gt;
+&lt;li&gt;安装完成后，在程序里找到“Git”-&amp;gt;“Git Bash”，看到一个命令行窗口的东西，就说明Git安装成功！&lt;/li&gt;
+&lt;/ul&gt;
+
+&lt;p&gt;&lt;img src=&#34;https://longlizl.github.io/images/git.png&#34; alt=&#34;&#34; /&gt;&lt;/p&gt;
+
+&lt;ul&gt;
+&lt;li&gt;安装完毕后，还需要指定你的用户名和email地址。输入以下命令：&lt;br /&gt;
+git config &amp;ndash;global user.name &amp;ldquo;name&amp;rdquo;&lt;br /&gt;
+git config &amp;ndash;global user.email &amp;ldquo;email address&amp;rdquo;&lt;br /&gt;&lt;/li&gt;
+&lt;li&gt;使用 git config -l 或 &amp;ndash;list 查看全局配置信息。&lt;br /&gt;
+&lt;img src=&#34;images/global.png&#34; alt=&#34;&#34; /&gt;&lt;/li&gt;
+&lt;/ul&gt;
+</description>
+        </item>
+        
+    </channel>
+</rss>
