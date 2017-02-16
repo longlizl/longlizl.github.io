@@ -6,7 +6,93 @@
         <language>zh-CN</language>
         <author>CoderZh</author>
         <rights>Copyright (c) 2015, CoderZh; all rights reserved.</rights>
-        <updated>Fri, 20 Jan 2017 14:18:54 CST</updated>
+        <updated>Thu, 16 Feb 2017 10:48:32 CST</updated>
+        
+        <item>
+            <title>Centos7下Discuz搭建</title>
+            <link>http://www.sfonline.com.cn/post/2017/discuz/</link>
+            <pubDate>Thu, 16 Feb 2017 10:48:32 CST</pubDate>
+            <author>CoderZh</author>
+            <guid>http://www.sfonline.com.cn/post/2017/discuz/</guid>
+            <description>
+
+&lt;p&gt;废话不多说直接进去主题，我们先在Discuz官方论坛将源码下载下来 &lt;a href=&#34;http://download.comsenz.com/DiscuzX/3.3/Discuz_X3.3_SC_UTF8.zip&#34;&gt;&lt;strong&gt;Discuz&lt;/strong&gt;&lt;/a&gt;
+这里为了方便我直接给出了下载地址。如果有最新版本可以直接去官网去下载。
+接下来我们将配置安装环境：&lt;/p&gt;
+
+&lt;h3 id=&#34;1-首先安装环境所需软件&#34;&gt;1.首先安装环境所需软件&lt;/h3&gt;
+
+&lt;p&gt;Appache,Mariadb(以前叫mysql,现在开源的服务名叫Mariadb),php，php-mysql(后续安装界面如没安装此服务会报错)&lt;/p&gt;
+
+&lt;h3 id=&#34;2-安装以上服务开启前关闭防火墙-firewall-及-selinux&#34;&gt;2.安装以上服务开启前关闭防火墙（firewall）及 Selinux&lt;/h3&gt;
+
+&lt;ul&gt;
+&lt;li&gt;关闭firewall防火墙&lt;br /&gt;
+临时关闭：systemctr stop firewalld&lt;br /&gt;
+禁止开机启动：systemctr disable firewalld
+&lt;img src=&#34;./images/FirewalldStop.png&#34; alt=&#34;&#34; /&gt;&lt;/li&gt;
+
+&lt;li&gt;&lt;p&gt;关闭Selinux（后续要没关闭此服务文件不可写入）&lt;br /&gt;
+临时关闭：setenfore 0&lt;br /&gt;
+永久关闭：修改配置文件/etc/selinux/config,将其中selinux设置为disable&lt;br /&gt;
+&lt;img src=&#34;./images/SelinuxDisable.png&#34; alt=&#34;&#34; /&gt;&lt;/p&gt;
+
+&lt;h3 id=&#34;3-接下来就安装所需软件&#34;&gt;3.接下来就安装所需软件&lt;/h3&gt;&lt;/li&gt;
+
+&lt;li&gt;&lt;p&gt;安装Appache服务(本文中已安装)&lt;br /&gt;
+查看是否已安装：yum list | grep httpd 或者 yum list installed | grep httpd 或者 rpm -qa | grep httpd&lt;br /&gt;
+&lt;img src=&#34;./images/httpd.png&#34; alt=&#34;&#34; /&gt;&lt;br /&gt;
+&lt;strong&gt;注：最后一列标记有@base的表示已安装&lt;/strong&gt;&lt;br /&gt;
+&lt;img src=&#34;./images/httpd1.png&#34; alt=&#34;&#34; /&gt;&lt;br /&gt;
+如未安装请使用：yum -y install httpd&lt;/p&gt;&lt;/li&gt;
+
+&lt;li&gt;&lt;p&gt;安装Mariadb-server数据库&lt;br /&gt;
+使用 yum -y install mariadb-server.x86_64 安装完成后查询是否已安装 yum list | grep mariadb&lt;br /&gt;
+&lt;img src=&#34;./images/mariadb.png&#34; alt=&#34;&#34; /&gt;&lt;/p&gt;&lt;/li&gt;
+
+&lt;li&gt;&lt;p&gt;安装php , php-mysql
+yum -y install php php-mysql安装后如下图：&lt;br /&gt;
+&lt;img src=&#34;./images/php.png&#34; alt=&#34;&#34; /&gt;&lt;/p&gt;
+
+&lt;h3 id=&#34;4-上传下载好的安装包里的upload文件到linux的-var-www-html目录下&#34;&gt;4.上传下载好的安装包里的upload文件到linux的/var/www/html目录下&lt;/h3&gt;
+
+&lt;p&gt;解压下载好的安装包，将里面upload文件上传到/var/www/html目录下，本例使用xftp工具来上传。&lt;br /&gt;
+&lt;img src=&#34;./images/up.png&#34; alt=&#34;&#34; /&gt;&lt;br /&gt;
+使用cd/var/www/html进入到html目录下，将upload目录及其子目录更改权限 chmod -Rf 777 upload/(根据具体情况授予权限)&lt;br /&gt;
+&lt;img src=&#34;./images/chmod.png&#34; alt=&#34;&#34; /&gt;&lt;/p&gt;&lt;/li&gt;
+&lt;/ul&gt;
+
+&lt;h3 id=&#34;5-启动httpd和mariadb服务&#34;&gt;5.启动httpd和mariadb服务&lt;/h3&gt;
+
+&lt;ul&gt;
+&lt;li&gt;开启httpd和mariadb服务&lt;br /&gt;
+systemctl start httpd , systemctl start mariadb&lt;br /&gt;
+查看服务状态：&lt;br /&gt;
+&lt;img src=&#34;./images/httprun.png&#34; alt=&#34;&#34; /&gt;
+&lt;img src=&#34;./images/mariadbrun.png&#34; alt=&#34;&#34; /&gt;&lt;/li&gt;
+
+&lt;li&gt;&lt;p&gt;开机启动httpd和mariadb服务&lt;br /&gt;
+systemctl enable httpd , systemctl enable mariadb&lt;br /&gt;
+查看开机启动状态：&lt;br /&gt;
+&lt;img src=&#34;./images/httpAndMariadbEnable.png&#34; alt=&#34;&#34; /&gt;&lt;/p&gt;
+
+&lt;h3 id=&#34;6-打开浏览器输入-http-ip-upload-ip是你服务器的ip地址&#34;&gt;6.打开浏览器输入：&lt;a href=&#34;http://ip/upload(ip是你服务器的ip地址&#34;&gt;http://ip/upload(ip是你服务器的ip地址&lt;/a&gt;)&lt;/h3&gt;
+
+&lt;p&gt;如下图出现安装界面接下来就按提示下一步安装：&lt;br /&gt;
+&lt;img src=&#34;./images/discuzInstall.png&#34; alt=&#34;&#34; /&gt;
+&lt;img src=&#34;./images/install.png&#34; alt=&#34;&#34; /&gt;
+&lt;img src=&#34;./images/install_01.png&#34; alt=&#34;&#34; /&gt;
+&lt;img src=&#34;./images/install_02.png&#34; alt=&#34;&#34; /&gt;
+&lt;img src=&#34;./images/install_03.png&#34; alt=&#34;&#34; /&gt;
+&lt;img src=&#34;./images/install_04.png&#34; alt=&#34;&#34; /&gt;
+&lt;img src=&#34;./images/install_05.png&#34; alt=&#34;&#34; /&gt;&lt;/p&gt;
+
+&lt;h3 id=&#34;7-安装完毕&#34;&gt;7.安装完毕&lt;/h3&gt;
+
+&lt;p&gt;之后可以进入管理员界面进行模块创建与管理了&lt;/p&gt;&lt;/li&gt;
+&lt;/ul&gt;
+</description>
+        </item>
         
         <item>
             <title>GIT安装与使用</title>

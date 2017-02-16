@@ -12,36 +12,36 @@
         }
     }
   </script>
-  <title>人生感悟 - LONG LI</title>
+  <title>Centos7下Discuz搭建 - LONG LI</title>
 <meta charset="UTF-8">
 <meta name="viewport" content="width=device-width, initial-scale=1.0">
 <meta http-equiv="X-UA-Compatible" content="IE=edge,chrome=1">
 <meta name="keywords" content="xxx,">
-<meta name="description" content="">
+<meta name="description" content="Discuz">
 <meta name="author" content="coderzh">
 <meta name="publisher" content="coderzh">
 <meta name="generator" content="http://gohugo.io/"/>
 
-<meta itemprop="name" content="人生感悟 - LONG LI">
-<meta itemprop="description" content="">
+<meta itemprop="name" content="Centos7下Discuz搭建 - LONG LI">
+<meta itemprop="description" content="Discuz">
 <meta itemprop="image" content="http://www.sfonline.com.cn/public/coderzh.jpg">
 
-<meta property="og:title" content="人生感悟 - LONG LI" />
+<meta property="og:title" content="Centos7下Discuz搭建 - LONG LI" />
 <meta property="og:type" content="article" />
-<meta property="og:url" content="http://www.sfonline.com.cn/%E4%BA%BA%E7%94%9F%E6%84%9F%E6%82%9F/" />
+<meta property="og:url" content="http://www.sfonline.com.cn/post/2017/discuz/" />
 
-<meta property="og:description" content="">
+<meta property="og:description" content="Discuz">
 
 <meta name="twitter:card" content="summary">
 <meta name="twitter:site" content="@coderzh">
-<meta name="twitter:title" content="人生感悟 - LONG LI">
-<meta name="twitter:description" content="">
+<meta name="twitter:title" content="Centos7下Discuz搭建 - LONG LI">
+<meta name="twitter:description" content="Discuz">
 <meta name="twitter:creator" content="@coderzh">
 <meta name="twitter:image" content="http://www.sfonline.com.cn/public/coderzh.jpg">
 
   <script>document.documentElement.className = document.documentElement.className.replace("no-js", "js");</script>
-  <link rel="canonical" href="http://www.sfonline.com.cn/%E4%BA%BA%E7%94%9F%E6%84%9F%E6%82%9F/">
-  <link rel='shortlink' href="http://www.sfonline.com.cn/%E4%BA%BA%E7%94%9F%E6%84%9F%E6%82%9F/"/>
+  <link rel="canonical" href="http://www.sfonline.com.cn/post/2017/discuz/">
+  <link rel='shortlink' href="http://www.sfonline.com.cn/post/2017/discuz/"/>
   <link rel="shortcut icon" href="http://www.sfonline.com.cn/public/favicon.ico"/>
   
 <link rel="stylesheet" id="human-style-css" href="http://www.sfonline.com.cn/wp-content/themes/hueman/style.css" type="text/css" media="all"/>
@@ -162,7 +162,7 @@
               <ul class="meta-single group">
                 
                 <li class="category">
-                  <a href="http://www.sfonline.com.cn/categories/%E4%BA%BA%E7%94%9F%E6%84%9F%E6%82%9F/" rel="category tag">人生感悟</a>
+                  <a href="http://www.sfonline.com.cn/categories/%E6%8A%80%E6%9C%AF%E6%96%87%E6%A1%A3/" rel="category tag">技术文档</a>
                 </li>
                 
               </ul>
@@ -174,12 +174,12 @@
                   class="post type-post status-publish format-standard has-post-thumbnail hentry category-australien tag-bondi-beach tag-city2surf tag-sydney">
                 <div class="post-inner group">
 
-                  <h1 class="post-title">人生感悟</h1>
+                  <h1 class="post-title">Centos7下Discuz搭建</h1>
 
                   <p class="post-byline">
-                    by  · 2017年01月22日 · 0 Words ·
-                    ~0min reading time |
-                    <a href="https://github.com/lilong/lilong-hugo-blog/blob/master/content/%e4%ba%ba%e7%94%9f%e6%84%9f%e6%82%9f.md"
+                    by  · 2017年02月16日 · 828 Words ·
+                    ~2min reading time |
+                    <a href="https://github.com/lilong/lilong-hugo-blog/blob/master/content/post/2017/discuz.md"
                        target="_blank">Improve on <i class="fa fa-github"></i></a>
                   </p>
 
@@ -189,6 +189,83 @@
                     <div class="entry-inner">
                       
                       
+
+<p>废话不多说直接进去主题，我们先在Discuz官方论坛将源码下载下来 <a href="http://download.comsenz.com/DiscuzX/3.3/Discuz_X3.3_SC_UTF8.zip"><strong>Discuz</strong></a>
+这里为了方便我直接给出了下载地址。如果有最新版本可以直接去官网去下载。
+接下来我们将配置安装环境：</p>
+
+<h3 id="1-首先安装环境所需软件">1.首先安装环境所需软件</h3>
+
+<p>Appache,Mariadb(以前叫mysql,现在开源的服务名叫Mariadb),php，php-mysql(后续安装界面如没安装此服务会报错)</p>
+
+<h3 id="2-安装以上服务开启前关闭防火墙-firewall-及-selinux">2.安装以上服务开启前关闭防火墙（firewall）及 Selinux</h3>
+
+<ul>
+<li>关闭firewall防火墙<br />
+临时关闭：systemctr stop firewalld<br />
+禁止开机启动：systemctr disable firewalld
+<img src="./images/FirewalldStop.png" alt="" /></li>
+
+<li><p>关闭Selinux（后续要没关闭此服务文件不可写入）<br />
+临时关闭：setenfore 0<br />
+永久关闭：修改配置文件/etc/selinux/config,将其中selinux设置为disable<br />
+<img src="./images/SelinuxDisable.png" alt="" /></p>
+
+<h3 id="3-接下来就安装所需软件">3.接下来就安装所需软件</h3></li>
+
+<li><p>安装Appache服务(本文中已安装)<br />
+查看是否已安装：yum list | grep httpd 或者 yum list installed | grep httpd 或者 rpm -qa | grep httpd<br />
+<img src="./images/httpd.png" alt="" /><br />
+<strong>注：最后一列标记有@base的表示已安装</strong><br />
+<img src="./images/httpd1.png" alt="" /><br />
+如未安装请使用：yum -y install httpd</p></li>
+
+<li><p>安装Mariadb-server数据库<br />
+使用 yum -y install mariadb-server.x86_64 安装完成后查询是否已安装 yum list | grep mariadb<br />
+<img src="./images/mariadb.png" alt="" /></p></li>
+
+<li><p>安装php , php-mysql
+yum -y install php php-mysql安装后如下图：<br />
+<img src="./images/php.png" alt="" /></p>
+
+<h3 id="4-上传下载好的安装包里的upload文件到linux的-var-www-html目录下">4.上传下载好的安装包里的upload文件到linux的/var/www/html目录下</h3>
+
+<p>解压下载好的安装包，将里面upload文件上传到/var/www/html目录下，本例使用xftp工具来上传。<br />
+<img src="./images/up.png" alt="" /><br />
+使用cd/var/www/html进入到html目录下，将upload目录及其子目录更改权限 chmod -Rf 777 upload/(根据具体情况授予权限)<br />
+<img src="./images/chmod.png" alt="" /></p></li>
+</ul>
+
+<h3 id="5-启动httpd和mariadb服务">5.启动httpd和mariadb服务</h3>
+
+<ul>
+<li>开启httpd和mariadb服务<br />
+systemctl start httpd , systemctl start mariadb<br />
+查看服务状态：<br />
+<img src="./images/httprun.png" alt="" />
+<img src="./images/mariadbrun.png" alt="" /></li>
+
+<li><p>开机启动httpd和mariadb服务<br />
+systemctl enable httpd , systemctl enable mariadb<br />
+查看开机启动状态：<br />
+<img src="./images/httpAndMariadbEnable.png" alt="" /></p>
+
+<h3 id="6-打开浏览器输入-http-ip-upload-ip是你服务器的ip地址">6.打开浏览器输入：<a href="http://ip/upload(ip是你服务器的ip地址">http://ip/upload(ip是你服务器的ip地址</a>)</h3>
+
+<p>如下图出现安装界面接下来就按提示下一步安装：<br />
+<img src="./images/discuzInstall.png" alt="" />
+<img src="./images/install.png" alt="" />
+<img src="./images/install_01.png" alt="" />
+<img src="./images/install_02.png" alt="" />
+<img src="./images/install_03.png" alt="" />
+<img src="./images/install_04.png" alt="" />
+<img src="./images/install_05.png" alt="" /></p>
+
+<h3 id="7-安装完毕">7.安装完毕</h3>
+
+<p>之后可以进入管理员界面进行模块创建与管理了</p></li>
+</ul>
+
                       
                     </div>
 
@@ -231,20 +308,14 @@
     <ul class="post-nav group">
       <li class="next">
         
-        <a href="http://www.sfonline.com.cn/%E7%82%B9%E6%BB%B4%E7%94%9F%E6%B4%BB/" rel="next">
+        <a href="http://www.sfonline.com.cn/%E4%BA%BA%E7%94%9F%E6%84%9F%E6%82%9F/" rel="next">
           <i class="fa fa-chevron-right"></i>
           <strong>Next post</strong>
-          <span>点滴生活</span>
+          <span>人生感悟</span>
         </a>
         
       </li>
       <li class="previous">
-        
-        <a href="http://www.sfonline.com.cn/post/2017/discuz/" rel="prev">
-          <i class="fa fa-chevron-left"></i>
-          <strong>Previous Post</strong>
-          <span>Centos7下Discuz搭建</span>
-        </a>
         
       </li>
     </ul>
