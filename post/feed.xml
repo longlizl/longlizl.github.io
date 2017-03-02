@@ -2,7 +2,7 @@
 <rss version="2.0" xmlns:atom="http://www.w3.org/2005/Atom">
     <channel>
         <title>Posts on LONG LI</title>
-        <link>http://www.sfonline.com.cn/post/</link>
+        <link>http://www.longzli.com.cn/post/</link>
         <language>zh-CN</language>
         <author>CoderZh</author>
         <rights>Copyright (c) 2015, CoderZh; all rights reserved.</rights>
@@ -10,10 +10,10 @@
         
         <item>
             <title>Centos7下Discuz搭建</title>
-            <link>http://www.sfonline.com.cn/post/2017/discuz/</link>
+            <link>http://www.longzli.com.cn/post/2017/discuz/</link>
             <pubDate>Thu, 16 Feb 2017 10:48:32 CST</pubDate>
             <author>CoderZh</author>
-            <guid>http://www.sfonline.com.cn/post/2017/discuz/</guid>
+            <guid>http://www.longzli.com.cn/post/2017/discuz/</guid>
             <description>
 
 &lt;p&gt;废话不多说直接进去主题，我们先在Discuz官方论坛将源码下载下来 &lt;a href=&#34;http://download.comsenz.com/DiscuzX/3.3/Discuz_X3.3_SC_UTF8.zip&#34;&gt;&lt;strong&gt;Discuz&lt;/strong&gt;&lt;/a&gt;
@@ -96,10 +96,10 @@ systemctl enable httpd , systemctl enable mariadb&lt;br /&gt;
         
         <item>
             <title>GIT安装与使用</title>
-            <link>http://www.sfonline.com.cn/post/2017/%E6%88%91%E7%9A%84%E7%AC%AC%E4%B8%80%E7%AF%87%E6%96%87%E6%A1%A3/</link>
+            <link>http://www.longzli.com.cn/post/2017/%E6%88%91%E7%9A%84%E7%AC%AC%E4%B8%80%E7%AF%87%E6%96%87%E6%A1%A3/</link>
             <pubDate>Fri, 20 Jan 2017 14:18:54 CST</pubDate>
             <author>CoderZh</author>
-            <guid>http://www.sfonline.com.cn/post/2017/%E6%88%91%E7%9A%84%E7%AC%AC%E4%B8%80%E7%AF%87%E6%96%87%E6%A1%A3/</guid>
+            <guid>http://www.longzli.com.cn/post/2017/%E6%88%91%E7%9A%84%E7%AC%AC%E4%B8%80%E7%AF%87%E6%96%87%E6%A1%A3/</guid>
             <description>
 
 &lt;p&gt;第一次接触&lt;a href=&#34;http://www.liaoxuefeng.com/wiki/0013739516305929606dd18361248578c67b8067c8c017b000&#34;&gt;&lt;strong&gt;git&lt;/strong&gt;&lt;/a&gt;分布式版本控制系统简单快速的功能给吸引住了！废话不多说了让我们来看下
@@ -112,7 +112,7 @@ systemctl enable httpd , systemctl enable mariadb&lt;br /&gt;
 &lt;li&gt;安装完成后，在程序里找到“Git”-&amp;gt;“Git Bash”，看到一个命令行窗口的东西，就说明Git安装成功！&lt;/li&gt;
 &lt;/ul&gt;
 
-&lt;p&gt;&lt;img src=&#34;http://www.sfonline.com.cn/images/git.png&#34; alt=&#34;&#34; /&gt;&lt;/p&gt;
+&lt;p&gt;&lt;img src=&#34;http://www.longzli.com.cn/images/git.png&#34; alt=&#34;&#34; /&gt;&lt;/p&gt;
 
 &lt;ul&gt;
 &lt;li&gt;安装完毕后，还需要指定你的用户名和email地址。输入以下命令：&lt;br /&gt;
