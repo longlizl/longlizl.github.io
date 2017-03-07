@@ -137,7 +137,8 @@ systemctl enable httpd , systemctl enable mariadb&lt;br /&gt;
 git config &amp;ndash;global user.name &amp;ldquo;name&amp;rdquo;&lt;br /&gt;
 git config &amp;ndash;global user.email &amp;ldquo;email address&amp;rdquo;&lt;br /&gt;&lt;/li&gt;
 &lt;li&gt;使用 git config -l 或 &amp;ndash;list 查看全局配置信息。&lt;br /&gt;
-&lt;img src=&#34;images/global.png&#34; alt=&#34;&#34; /&gt;&lt;/li&gt;
+&lt;img src=&#34;images/global.png&#34; alt=&#34;&#34; /&gt;&lt;br /&gt;
+没时间写，有时间在补上&lt;/li&gt;
 &lt;/ul&gt;
 </description>
         </item>
@@ -154,22 +155,12 @@ git config &amp;ndash;global user.email &amp;ldquo;email address&amp;rdquo;&lt;b
 
 &lt;h3 id=&#34;我的经历&#34;&gt;我的经历&lt;/h3&gt;
 
-&lt;ul&gt;
-&lt;li&gt;&lt;/li&gt;
-&lt;li&gt;&lt;/li&gt;
-&lt;li&gt;&lt;/li&gt;
-&lt;li&gt;&lt;/li&gt;
-&lt;/ul&gt;
+&lt;p&gt;说起经历，唉真是苦逼。在北京呆了5年，也吸了5年的雾霾。现在提起北京最大亮点也就是雾霾了。不过也还好了，认识了好多朋友也见识了不少。趁着年轻多跑些地方对自己的经历和阅历也是有好处的。虽然我去过的地方也不算多，但国内一线城市也都跑遍了，也不枉此生。从北京回来也有2个年头了，至于当初
+为什么选择回老家也并不是因为北京的天气，只是为了最终归宿找个借口而已。现在年龄大了，老家父母都一把年纪也需要有个照应。也该定下心来了。说了这么多也是告诉大家工作与生活要兼顾，多陪下父母。如果有条件的话把父母接到你所工作的城市。愿大家工作生活家庭幸福美满！&lt;/p&gt;
 
-&lt;h3 id=&#34;我的技能&#34;&gt;我的技能&lt;/h3&gt;
+&lt;h3 id=&#34;生活中的我&#34;&gt;生活中的我&lt;/h3&gt;
 
-&lt;h3 id=&#34;生活中的我&#34;&gt;生活中的我`&lt;/h3&gt;
-
-&lt;h3 id=&#34;系列文章&#34;&gt;系列文章&lt;/h3&gt;
-
-&lt;h3 id=&#34;一些链接&#34;&gt;一些链接&lt;/h3&gt;
-
-&lt;h3 id=&#34;声明&#34;&gt;声明&lt;/h3&gt;
+&lt;p&gt;生活中的我不喜欢热闹，喜欢安静。因为我坚信人在最安静的环境下做出的判断才是最正确的。我比较喜欢关注一些国际和国内热点新闻，最新军事动态。互联网发展动态及趋势以及理财相关。偶尔和同学一起出去聚聚，一起聊聊。&lt;/p&gt;
 </description>
         </item>
         

@@ -119,7 +119,8 @@ systemctl enable httpd , systemctl enable mariadb&lt;br /&gt;
 git config &amp;ndash;global user.name &amp;ldquo;name&amp;rdquo;&lt;br /&gt;
 git config &amp;ndash;global user.email &amp;ldquo;email address&amp;rdquo;&lt;br /&gt;&lt;/li&gt;
 &lt;li&gt;使用 git config -l 或 &amp;ndash;list 查看全局配置信息。&lt;br /&gt;
-&lt;img src=&#34;images/global.png&#34; alt=&#34;&#34; /&gt;&lt;/li&gt;
+&lt;img src=&#34;images/global.png&#34; alt=&#34;&#34; /&gt;&lt;br /&gt;
+没时间写，有时间在补上&lt;/li&gt;
 &lt;/ul&gt;
 </description>
         </item>
