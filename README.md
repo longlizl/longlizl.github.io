@@ -1,37 +1,36 @@
-## Welcome to GitHub Pages
+# 1. 黄元涛
 
-You can use the [editor on GitHub](https://github.com/longlizl/longlizl.github.io/edit/main/README.md) to maintain and preview the content for your website in Markdown files.
+>主页介绍：
+>
+>大boss
 
-Whenever you commit to this repository, GitHub Pages will run [Jekyll](https://jekyllrb.com/) to rebuild the pages in your site, from the content in your Markdown files.
+#  &nbsp;&nbsp;1.1 人物属性
 
-### Markdown
 
-Markdown is a lightweight and easy-to-use syntax for styling your writing. It includes conventions for
+>   -----金-----
 
-```markdown
-Syntax highlighted code block
+> ​	-----木-----
 
-# Header 1
-## Header 2
-### Header 3
+> ​	-----水----
 
-- Bulleted
-- List
+> ​	-----火-----
 
-1. Numbered
-2. List
+> ​	-----土-----
 
-**Bold** and _Italic_ and `Code` text
+#  &nbsp;&nbsp;1.2 人物技能
 
-[Link](url) and ![Image](src)
-```
 
-For more details see [GitHub Flavored Markdown](https://guides.github.com/features/mastering-markdown/).
+>   -----缠绕-----
 
-### Jekyll Themes
+> ​	-----突刺-----
 
-Your Pages site will use the layout and styles from the Jekyll theme you have selected in your [repository settings](https://github.com/longlizl/longlizl.github.io/settings/pages). The name of this theme is saved in the Jekyll `_config.yml` configuration file.
+> ​	-----囚笼----
 
-### Support or Contact
+> ​	-----无敌金身-----
 
-Having trouble with Pages? Check out our [documentation](https://docs.github.com/categories/github-pages-basics/) or [contact support](https://support.github.com/contact) and we’ll help you sort it out.
+> ​	-----器魂真身-----
+
+2. test1
+	
+3. test2
+4. test3
