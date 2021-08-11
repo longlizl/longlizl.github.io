@@ -53,21 +53,25 @@ vim schema.xml
 
 **4.启动mycat服务**
 
+```shell
 cd /opt/mycat/bin
-
 ./mycat start
+```
 
 ![img](https://longlizl.github.io/mycat高可用读写分离水平分表/images/3.png)
 
+```shell
 mycat启动后会有2个端口8066（数据连接端口），9066（管理端口）
-
 ss -ntupl
+```
 
 ![img](https://longlizl.github.io/mycat高可用读写分离水平分表/images/4.png)
 
 **5.通过mysql客户端连接8066（我们在mysql-master节点登录mycat试下）**
 
+```shell
 mysql -ulilong -p111111 -P8066 -h 192.168.205.183
+```
 
 ![img](https://longlizl.github.io/mycat高可用读写分离水平分表/images/5.png)
 
@@ -79,11 +83,11 @@ mysql -ulilong -p111111 -P8066 -h 192.168.205.183
 
 ![img](https://longlizl.github.io/mycat高可用读写分离水平分表/images/7.png)
 
+```shell
 crate table city(id int,name varchar(8),area float(5,2),people_num int);
-
 查看数据库中是否创建成功
-
 show tables;
+```
 
 ![img](https://longlizl.github.io/mycat高可用读写分离水平分表/images/8.png)
 
@@ -93,7 +97,9 @@ show tables;
 
 **8.通过mysql客户端连接9066可以查看到相关dataNode信息**
 
+```shell
 mysql -ulilong -p111111 -P9066 -h 192.168.205.183
+```
 
 show @@dataNode;
 
@@ -101,69 +107,74 @@ show @@dataNode;
 
 **在2台mycat节点上安装keepalived并单独配置日志文件（默认在/var/log/messages日志查看不方便）**
 
+```shell
 192.168.205.182:
-
 yum -y install keepalived
-
 vim /etc/sysconfig/keepalived
-
 KEEPALIVED_OPTIONS="-D -d -S 0"
+```
 
 ![img](https://longlizl.github.io/mycat高可用读写分离水平分表/images/11.png)
 
+```shell
 vim /etc/rsyslog.conf
-
 local0.*                        /var/log/keepalived.log
+```
 
 ![img](https://longlizl.github.io/mycat高可用读写分离水平分表/images/12.png)
 
+```shell
 systemctl restart rsyslog 
-
 vim /etc/keepalived/keepalived.conf
+```
 
 ![img](https://longlizl.github.io/mycat高可用读写分离水平分表/images/13.png)
 
+```shell
 192.168.205.183:
-
 yum -y install keepalived
-
 vim /etc/sysconfig/keepalived
-
 KEEPALIVED_OPTIONS="-D -d -S 0"
+```
 
 ![img](https://longlizl.github.io/mycat高可用读写分离水平分表/images/14.png)
 
+```shell
 vim /etc/rsyslog.conf
-
 local0.*                        /var/log/keepalived.log
+```
 
 ![img](https://longlizl.github.io/mycat高可用读写分离水平分表/images/15.png)
 
+```shell
 systemctl restart rsyslog 
-
 vim /etc/keepalived/keepalived.conf
+```
 
 ![img](https://longlizl.github.io/mycat高可用读写分离水平分表/images/16.png)
 
 **分别启动2节点keepalived**
 
+```shell
 192.168.205.182:
-
 systemctl start keepalived
-
 可以看到vip接口在182节点上
+```
 
 ![img](https://longlizl.github.io/mycat高可用读写分离水平分表/images/17.png)
 
+```shell
 192.168.205.183:
-
 systemctl start keepalived
+```
 
 ![img](https://longlizl.github.io/mycat高可用读写分离水平分表/images/18.png)
 
 在mysql节点上我们通过vip接口登录试下
 
+```mysql
 mysql -ulilong -p111111 -P8066 -h 192.168.205.250
+```
 
 下图我们看到已经登录成功
 
@@ -187,57 +198,49 @@ mysql -ulilong -p111111 -P8066 -h 192.168.205.250
 
 2节点分别创建存放脚本的文件
 
+```shell
 mkdir -p /etc/keepalived/scripts
-
 vim  /etc/keepalived/scripts/chk_mycat.sh
-
-\#!/bin/bash
-
+#!/bin/bash
 MYCAT_PORT=`ss -ntupl | egrep '8066|9066' | wc -l`
-
 if [ $MYCAT_PORT -ne 2 ];then
-
-​        pkill keepalived
-
+        pkill keepalived
 fi
+```
 
 ![img](https://longlizl.github.io/mycat高可用读写分离水平分表/images/23.png)
 
 在 /etc/keepalived/keepalived.conf配置文件中将以下内容加入到相应位置
 
+```shell
 vrrp_script chk_mycat {
-
-​    script "/etc/keepalived/scripts/chk_mycat.sh"
-
-​    interval 2
-
-​    weight -50
-
-​    fall 3
-
-​    rise 3
-
-​    timeout 3
-
+    script "/etc/keepalived/scripts/chk_mycat.sh"
+    interval 2
+    weight -50
+    fall 3
+    rise 3
+    timeout 3
 }
-
    track_script {
-
-​        chk_mycat
-
+        chk_mycat
    }
+```
 
 ![img](https://longlizl.github.io/mycat高可用读写分离水平分表/images/24.png)
 
 重新启动keepalived服务
 
+```shell
 systemctl restart keepalived
+```
 
 验证检测脚本是否生效：
 
 将master节点上mycat服务手动停掉
 
+```shell
 cd /opt/mycat/bin && ./mycat stop
+```
 
 ![img](https://longlizl.github.io/mycat高可用读写分离水平分表/images/25.png)
 
@@ -257,101 +260,78 @@ cd /opt/mycat/bin && ./mycat stop
 
 **2个keepalived节点安装postfix邮件服务（默认已安装）和 发送邮件插件mailx** 
 
+```shell
 yum -y install mailx
-
 vim /etc/mail.rc
-
 set  from=test@hzs.com.cn
-
 set  smtp=smtp.exmail.qq.com
-
 set  smtp-auth-user=test@hzs.com.cn
-
 set  smtp-auth-password=*******
-
 smtp-auth=login
+```
 
 ![img](https://longlizl.github.io/mycat高可用读写分离水平分表/images/29.png)
 
 将以下配置加入下面相应位置（2台做同样操作）
 
+```shell
 MASTER，BACKUP，FAULT（大小写均可）
-
 vim /etc/keepalived/keepalived.conf
-
 notify_master "/etc/keepalived/scripts/notify.sh MASTER"
-
 notify_backup "/etc/keepalived/scripts/notify.sh BACKUP"
-
 notify_fault "/etc/keepalived/scripts/notify.sh FAULT"
+```
 
 ![img](https://longlizl.github.io/mycat高可用读写分离水平分表/images/30.png)
 
 **创建相应脚本文件(2台做同样操作)**
 
+```shell
 cd  /etc/keepalived/scripts
-
 vim notify.sh
-
-\#!/bin/bash
-
+#!/bin/bash
 SEND_to_MAIL='1550789579@qq.com'
-
 notify() {
-
-​    MAIL_SUBJECT="$(hostname) to be $1, vip 转移"
-
-​    MAIL_TEXT="$(date +'%F %T'): vrrp transition, $(hostname) changed to be $1"
-
-​    echo "$MAIL_TEXT" | mail -s "$MAIL_SUBJECT" $SEND_to_MAIL
-
+    MAIL_SUBJECT="$(hostname) to be $1, vip 转移"
+    MAIL_TEXT="$(date +'%F %T'): vrrp transition, $(hostname) changed to be $1"
+    echo "$MAIL_TEXT" | mail -s "$MAIL_SUBJECT" $SEND_to_MAIL
 }
-
 case $1 in
-
 MASTER)
-
-​    notify MASTER
-
-​    ;;
-
+    notify MASTER
+    ;;
 BACKUP)
-
-​    notify BACKUP
-
-​    ;;
-
+    notify BACKUP
+    ;;
 FAULT)
-
-​    notify FAULT
-
-​    ;;
-
+    notify FAULT
+    ;;
 *)
-
-​    echo "Usage: $(basename $0) {MASTER|BACKUP|FAULT}"
-
-​    exit 1
-
-​    ;;
-
+    echo "Usage: $(basename $0) {MASTER|BACKUP|FAULT}"
+    exit 1
+    ;;
 esac
+```
 
 ![img](https://longlizl.github.io/mycat高可用读写分离水平分表/images/31.png)
 
 更改脚本执行权限
 
+```shell
 chmod +x notify
+```
 
 重新启动keepalived服务
 
+```shell
 systemctl restart  keepalived
+```
 
 已可以看到vip已转移到备用节点上
 
 ![img](https://longlizl.github.io/mycat高可用读写分离水平分表/images/32.png)
 
-\-------------------------------------------------------------------------------------------------------------------------------------
+---
 
 **mycat分表**
 
@@ -361,11 +341,15 @@ systemctl restart  keepalived
 
 2.mycat节点（2台分表做以下配置）
 
+```
 vim schema.xml
+```
 
 ![img](https://longlizl.github.io/mycat高可用读写分离水平分表/images/34.png)
 
+```
 vim rule.xml
+```
 
 ![img](https://longlizl.github.io/mycat高可用读写分离水平分表/images/35.png)
 
@@ -373,13 +357,16 @@ vim rule.xml
 
 3.重启mycat服务
 
+```shell
 cd /opt/mycat/bin && ./mycat restart
+```
 
 4.通过VIP接口连接mycat服务，插入数据
 
+```mysql
 mysql -ulilong -p111111 -P8066 -h 192.168.205.250
-
 insert into wuhan(id,address) values(7,'xx'),(8,'xg'),(9,'lx'),(10,'ob'),(11,'kx'),(12,'hx');
+```
 
 ![img](https://longlizl.github.io/mycat高可用读写分离水平分表/images/37.png)
 
