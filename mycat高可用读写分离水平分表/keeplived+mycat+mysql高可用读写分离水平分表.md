@@ -379,3 +379,4 @@ insert into wuhan(id,address) values(7,'xx'),(8,'xg'),(9,'lx'),(10,'ob'),(11,'kx
 ![img](https://longlizl.github.io/mycat高可用读写分离水平分表/images/39.png)
 
 到此所有配置已结束
+
