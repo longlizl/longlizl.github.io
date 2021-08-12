@@ -1,6 +1,6 @@
 MySql忘记root密码：
 
-* 一、更改my.cnf配置文件
+### 一、更改my.cnf配置文件
 
 1. 用命令编辑/etc/my.cnf配置文件，即：vim /etc/my.cnf
 
@@ -16,7 +16,7 @@ MySql忘记root密码：
    systemctl restart mariadb
    ```
 
-* 二、更改root用户名
+### 二、更改root用户名
 
 1. 重启以后，执行mysql命令进入mysql命令行
 
