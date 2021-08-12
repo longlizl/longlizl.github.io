@@ -9,7 +9,7 @@
     <meta name="description" content="龙哥的网站，收集、整理、工作常用的知识">
     <meta name="keywords" content="kali,linux,剪辑">
     <meta name="author" content="YYDS">
-    <title>龙哥的私房菜</title>
+    <title>龙哥</title>
     <!-- docsify的主题样式 -->
     <link rel="stylesheet" href="//cdn.jsdelivr.net/npm/docsify/lib/themes/vue.css">
     <!-- 侧边栏插件的样式 -->
@@ -36,7 +36,7 @@
             // 侧边栏左侧的logo
             logo: '',
             // 侧边栏顶部的标题
-            name: '请叫我龙哥',
+            name: '龙哥',
             // 点击标题后的跳转地址
             nameLink: '/',
             // 禁用emoji
@@ -57,7 +57,7 @@
                 noData: '找不到结果',
                 depth: 4,
                 hideOtherSidebarContent: false,
-                namespace: '邓邓的零食橱'
+                namespace: '请叫我龙哥'
             },
             // 字数插件
             count:{
@@ -81,6 +81,15 @@
                 crossChapter: true,
                 crossChapterText: true
             },
+			// 分享插件
+			share: {
+				reddit: true,
+				linkedin: true,
+				facebook: true,
+				twitter: true,
+				whatsapp: true,
+				telegram: true
+			},
             // 文本高亮
             'flexible-alerts': {
                 style: 'flat',
@@ -119,5 +128,8 @@
     <script src="//cdn.jsdelivr.net/npm/docsify-sidebar-collapse/dist/docsify-sidebar-collapse.min.js"></script>
     <!-- 页脚信息 -->
     <script src="//cdn.jsdelivr.net/npm/@alertbox/docsify-footer/dist/docsify-footer.min.js"></script>
+	<!-- 分享插件 -->
+	<script src="//unpkg.com/docsify-share/build/index.min.js"></script>
+
 </body>
 </html>
