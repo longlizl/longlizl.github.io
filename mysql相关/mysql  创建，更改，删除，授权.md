@@ -2,7 +2,7 @@
 MySQL5.7 mysql.user表没有password字段改 authentication_string；
 ```
 
-1. **创建用户:**
+* 1. 创建用户:
 
 ```mysql
 命令: CREATE USER 'username'@'host' IDENTIFIED BY 'password';
@@ -19,7 +19,7 @@ host - 指定该用户在哪个主机上可以登陆，此处的"localhost"，�
 password - 该用户的登陆密码,密码可以为空,如果为空则该用户可以不需要密码登陆服务器。
 ```
 
-2. **授权:**
+* 2. 授权:
 
 ```mysql
 命令:GRANT ALL privileges ON databasename.tablename TO 'username'@'host' WITH GRANT OPTION
@@ -27,7 +27,7 @@ exp: privileges - 用户的操作权限,如SELECT , INSERT , UPDATE 等(详细�
 例子: GRANT SELECT, INSERT ON mq.* TO 'dog'@'localhost';
 ```
 
-3. **创建用户同时授权**
+* 3. 创建用户同时授权
 
 ```mysql
 mysql> grant all privileges on mq.* to test@localhost identified by '1234';
@@ -42,7 +42,7 @@ exp:必须执行 flush privileges;
 否则登录时提示：ERROR 1045 (28000): Access denied for user 'user'@'localhost' (using password: YES ) 
 ```
 
-4. **设置与更改用户密码**
+* 4. 设置与更改用户密码
 
 ```mysql
 1.命令:SET PASSWORD FOR 'username'@'host' = PASSWORD('newpassword');
@@ -53,7 +53,7 @@ exp:必须执行 flush privileges;
 
 ```
 
-5. **撤销用户权限**
+* 5. 撤销用户权限
 
 ```mysql
 命令: REVOKE all ON databasename.tablename FROM 'username'@'host';
@@ -66,13 +66,13 @@ GRANT SELECT ON test.user TO 'dog'@'localhost', 则在使用REVOKE SELECT ON *.*
 具体信息可以用命令SHOW GRANTS FOR 'dog'@'localhost'; 查看.
 ```
 
-6. **删除用户**
+* 6. 删除用户
 
 ```mysql
 DROP USER 'username'@'host';
 ```
 
-7. **查看用户的授权**
+* 7. 查看用户的授权
 
 ```mysql
 mysql> show grants for dog@localhost;
@@ -94,19 +94,19 @@ mysql> show grants for dog@localhost;
 PS:GRANT USAGE:mysql usage权限就是空权限，默认create user的权限，只能连库，啥也不能干
 ```
 
-8. **创建库并设置默认编码：**
+* 8. 创建库并设置默认编码：
 
 ```mysql
 CREATE DATABASE `mydb` CHARACTER SET utf8 COLLATE utf8_general_ci;
 ```
 
-9. **某用户csuser无法查询到存储过程数据需要给mysql库授权**
+* 9. 某用户csuser无法查询到存储过程数据需要给mysql库授权
 
 ```mysql
 grant select on mysql.* TO 'csuser'@'%';
 ```
 
-10. **删除数据库中所有表：**
+* 10. 删除数据库中所有表：
 
 ```mysql
 SELECT CONCAT('drop table ',table_name,';') FROM information_schema.`TABLES` WHERE table_schema='jumpserver';
