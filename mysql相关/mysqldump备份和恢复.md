@@ -2,7 +2,7 @@
 
 **1、备份命令：mysqldump**
 
-```mysql
+```sql
 　　MySQL数据库自带的一个很好用的备份命令。是逻辑备份，导出 的是SQL语句。也就是把数据从MySQL库中以逻辑的SQL语句的形式直接输出或生成备份的文件的过程。
 
 单实例语法（Syntax）: 
@@ -15,7 +15,7 @@ eg: mysqldump -u root -p wordpress > /opt/wordpress_$(date +%F).sql
 
 **2、参数解析**
 
-```mysql
+```sql
  1 -A --all-databases：导出全部数据库 
 
 2 -Y --all-tablespaces：导出全部表空间 
@@ -85,7 +85,7 @@ eg: mysqldump -u root -p wordpress > /opt/wordpress_$(date +%F).sql
 
 举例使用：
 
-```mysql
+```sql
 # a、导出整个数据库(包括数据库中的数据） 
    mysqldump -u username -p dbname > dbname.sql  
 
@@ -101,14 +101,14 @@ eg: mysqldump -u root -p wordpress > /opt/wordpress_$(date +%F).sql
 
 **3、恢复操作**
 
-```mysql
+```sql
 语法（Syntax）： 
 mysql -u<username> -p<password> <dbname> < /opt/mytest_bak.sql   #库必须保留，空库也可 说明：指定dbname，相当于use <dbname>
 ```
 
 **4、示例**
 
-```mysql
+```sql
  1. 无参数备份数据库mytest和恢复
 	备份操作: 
 	a、备份 mysqldump -uroot -p‘123456’ mytest > /mnt/mytest_bak_$(date +%F).sql
@@ -125,13 +125,13 @@ mysql -u<username> -p<password> <dbname> < /opt/mytest_bak.sql   #库必须保�
 
 **b.  备份并忽略其中某个表**
 
-```mysql
+```sql
 mysqldump -uusername -ppassword -h192.168.0.1 -P3306 dbname --ignore-table=dbname.dbtanles > dump.sql  
 ```
 
 说明：加了-B参数后，备份文件中多的Create database和use mytest的命令 加-B参数的好处： 加上-B参数后，导出的数据文件中已存在创建库和使用库的语句，不需要手动在原库是创建库的操作，在恢复过程中不需要手动建库，可以直接还原恢复。
 
-```mysql
+```sql
 1 恢复操作 a、删除mytest库 mysql -uroot -p'123456' -e "drop database mytest;" b、恢复数据 
 
 2 使用不带参数的导出文件导入（导入时不指定要恢复的数据库），报错 mysql -uroot - p'123456' < /mnt/mytest_bak.sql    ERROR 1046 (3D000) at line 22: No database selected 
@@ -141,13 +141,13 @@ mysqldump -uusername -ppassword -h192.168.0.1 -P3306 dbname --ignore-table=dbnam
 4 通过二进制文件恢复数据
 ```
 
-```mysql
+```sql
 mysqlbinlog mysql-bin.000002 | mysql -uroot -p111111
 ```
 
 通过二进制文件重开始点787到结束点1668的数据进行恢复
 
-```mysql
+```sql
 mysqlbinlog mysql-bin.000002 --start-position=787   --stop-position=1668|mysql -uroot -p111111
 # 查看数据 
 mysql -uroot -p'123456' -e "select * from mytest.student;"
@@ -155,14 +155,14 @@ mysql -uroot -p'123456' -e "select * from mytest.student;"
 
 **（1）--compact参数优化备份文小大小，减少输出注释（一般用于Debug调试）**
 
-```mysql
+```sql
 （1）备份 mysqldump -uroot -p'123456' --compact -B mytest > /mnt/mytest_bak_Compact.sql 
 # 说明： 使用--compact参数，可以优化输出内容的大小，让容量更少，适合调试。便会忽略--skip-add-drop-table，--no-set-names，--skip-disable-keys，--skip-add-locks等几个参数的功能。
 ```
 
 **（2）指定压缩命令来压缩备份文件**
 
-```mysql
+```sql
 （1）备份 
 
 mysqldump -uroot -p'123456'  -B mytest | gzip > /mnt/mytest_bak_.sql.gz
@@ -180,7 +180,7 @@ gunzip < /mnt/mytest_bak_.sql.gz | mysqldump -uroot -p'123456' databasename
 
 **（3）备份多个数据库**
 
-```mysql
+```sql
 （1）说明 通过-B参数指定相关数据库，每个数据库名之前用空格分格。当使用-B参数后，将所有数据库全部列全，则此时等同于-A参数。 （2）备份 mysqldump -uroot -p'123456' -B mytest wiki | gzip > /mnt/mytestAndWiki_bak.sql.gz
 ```
 
@@ -190,7 +190,7 @@ gunzip < /mnt/mytest_bak_.sql.gz | mysqldump -uroot -p'123456' databasename
 
 分库备份的意义是在所有库都备份成一个备份文件时，恢复其中一个库的数据是比较麻烦的，所以分库备份，利于恢复。分库备份脚本如下：
 
-```mysql
+```sql
 for dbname in ` mysql -uroot -p'123456' -e "show databases;" | grep -Evi "database|infor|perfor"` do    mysqldump -uroot -p"123456" --events -B $dbname | gzip > /mnt/${dbname}_bak.sql.gz done
 ```
 
@@ -198,19 +198,19 @@ for dbname in ` mysql -uroot -p'123456' -e "show databases;" | grep -Evi "databa
 
 **（5）-d参数，只备份数据库中表结构**
 
-```mysql
+```sql
 mysqldump -uroot -p'123456' -d mytest > /mnt/mytestDesc_bak.sql
 ```
 
 **（6）-A参数备份全库，并且-F刷新和切换binlog**
 
-```mysql
+```sql
 mysqldump -uroot -p'123456' -A -B -F > /mnt/All_bak.sql
 ```
 
 **（7）--master-data参数在备份文件中写入当前binlog文件号**
 
-```mysql
+```sql
 mysqldump -uroot -p'123456' --master-data=1 --compact mytest > /mnt/All_bak.sql mysqldump -uroot -p'123456' --master-data=2 --compact mytest > /mnt/All_bak.sql
 ```
 
@@ -218,14 +218,14 @@ mysqldump -uroot -p'123456' --master-data=1 --compact mytest > /mnt/All_bak.sql 
 
 **二、备份单个表**
 
-```mysql
+```sql
 语法（Syntax）：
 不能加-B参数 mysqldump -u<username> -p<password> dbname tablename1 tablename2... > /path/to/*.sql
 ```
 
 示例：
 
-```mysql
+```sql
 示例1：备份mytest库中的student表 mysqldump -uroot -p'123456' mytest student > /mnt/table_bak/student_bak.sql 
 
 示例2：备份mytest库中所有表，就是备份mytest库 mysqldump -uroot -p'123456' mytest  > /mnt/table_bak/all_bak.sql 
@@ -243,7 +243,7 @@ mysqldump -uroot -p'123456' --master-data=1 --compact mytest > /mnt/All_bak.sql 
 
 **1**、mysqldump的关键参数
 
-```mysql
+```sql
 -B：指定多个库，在备份文件中增加建库语句和use语句 --compact：去掉备份文件中的注释，适合调试，生产场景不用 
 -A：备份所有库 
 -F：刷新binlog日志 --master-data：在备份文件中增加binlog日志文件名及对应的位置点 
@@ -255,7 +255,7 @@ mysqldump -uroot -p'123456' --master-data=1 --compact mytest > /mnt/All_bak.sql 
 
 **2、不同引擎备份命令参数用法**
 
-```mysql
+```sql
 （1）Myisam引擎： mysqldump -uroot -p123456 -A -B --master-data=1 -x| gzip > /data/all_$(date +%F).sql.gz 
 
 （2）InnoDB引擎： mysqldump -uroot -p123456 -A -B  --master-data=1 --single-transaction > /data/bak.sql 
@@ -265,13 +265,13 @@ mysqldump -uroot -p'123456' --master-data=1 --compact mytest > /mnt/All_bak.sql 
 
 **将本地导出的数据库导入到远程主机：**
 
-```mysql
+```sql
 mysql -h gz-cdb-1728jq2fex.sql.tencentcdb.com -P 62360 -u root -p < demo.sql
 ```
 
 **将远程服务器的数据库拷到本地/复制他人数据库**
 
-```mysql
+```sql
 mysqldump -h '114.212.111.123' -uTHATUSER -pTHATPWD --opt --compress THATDB --skip-lock-tables | mysql -h localhost -uMYUSER -pMYPWD MYDB
 ```
 
@@ -303,37 +303,37 @@ mysqldump -h '114.212.111.123' -uTHATUSER -pTHATPWD --opt --compress THATDB --sk
 
 1.①导出一个库结构
 
-```mysql
+```sql
 mysqldump -d dbname -u root -p > xxx.sql
 ```
 
 ②导出多个库结构
 
-```mysql
+```sql
 mysqldump -d -B dbname1 dbname2 -u root -p > xxx.sql
 ```
 
  2.①导出一个库数据
 
-```mysql
+```sql
 mysqldump -t dbname -u root -p > xxx.sql
 ```
 
 ②导出多个库数据
 
-```mysql
+```sql
 mysqldump -t -B dbname1 dbname2 -u root -p > xxx.sql
 ```
 
  3.①导出一个库结构以及数据
 
-```mysql
+```sql
 mysqldump dbname1 -u root -p > xxx.sql
 ```
 
 ②导出多个库结构以及数据
 
-```mysql
+```sql
 mysqldump -B dbname1 dbname2 -u root -p > xxx.sql
 ```
 
@@ -341,37 +341,37 @@ mysqldump -B dbname1 dbname2 -u root -p > xxx.sql
 
 4.①导出一个表结构
 
-```mysql
+```sql
 mysqldump -d dbname1 tablename1 -u root -p > xxx.sql
 ```
 
 ②导出多个表结构
 
-```mysql
+```sql
 mysqldump -d  dbname1 --tables tablename1 tablename2 -u root -p > xxx.sql
 ```
 
  5.①导出一个表数据
 
-```mysql
+```sql
 mysqldump -t dbname1 tablename1 -u root -p > xxx.sql
 ```
 
 ②导出多个表数据
 
-```mysql
+```sql
 mysqldump -t  dbname1 --tables tablename1 tablename2 -u root -p > xxx.sql
 ```
 
  6.①导出一个表结构以及数据
 
-```mysql
+```sql
 mysqldump dbname1 tablename1 -u root -p > xxx.sql
 ```
 
 ②导出多个表结构以及数据
 
-```mysql
+```sql
 mysqldump  dbname1 --tables tablename1 tablename2 -u root -p > xxx.sql
 ```
 
@@ -379,7 +379,7 @@ mysqldump  dbname1 --tables tablename1 tablename2 -u root -p > xxx.sql
 
 7.只导出存储过程和函数(不导出结构和数据，要同时导出结构的话，需要同时使用-d)
 
-```mysql
+```sql
 mysqldump -R -ndt dbname1 -u root -p > xxx.sql
 ```
 
@@ -387,7 +387,7 @@ mysqldump -R -ndt dbname1 -u root -p > xxx.sql
 
 8.只导出事件
 
-```mysql
+```sql
 mysqldump -E -ndt dbname1 -u root -p > xxx.sql
 ```
 
@@ -395,7 +395,7 @@ mysqldump -E -ndt dbname1 -u root -p > xxx.sql
 
 9.不导出触发器（触发器是默认导出的–triggers，使用–skip-triggers屏蔽导出触发器）
 
-```mysql
+```sql
 mysqldump --skip-triggers dbname1 -u root -p > xxx.sql
 ```
 
@@ -409,7 +409,7 @@ source xxx.sql
 
 总结一下：
 
-```mysql
+```sql
 -d 结构(--no-data:不导出任何数据，只导出数据库表结构)
 
 -t 数据(--no-create-info:只导出数据，而不添加CREATE TABLE 语句)
@@ -435,7 +435,7 @@ source xxx.sql
 
 **④导出所有(结构&数据&存储过程&函数&事件&触发器)使用-R -E(相当于①，省略了-d -t;触发器默认导出)**
 
-```mysql
+```sql
 mysqldump -u root -p  -R -E -B dbname1  > xxx.sql
 ```
 
@@ -443,13 +443,13 @@ mysqldump -u root -p  -R -E -B dbname1  > xxx.sql
 
 8.查看数据库使用的引擎，保证导出数据一致性。（针对InnoDB引擎才可以使用 **--single-transaction参数**）
 
-```mysql
+```sql
 mysqldump -u root -p --set-gtid-purged=OFF --single-transaction  -R -E -B dbname1  > xxx.sql
 ```
 
 **查看数据库引擎**
 
-```mysql
+```sql
 show variables like '%storage_engine%';
 ```
 
@@ -459,19 +459,19 @@ show variables like '%storage_engine%';
 
 **通过二进制文件恢复数据**
 
-```mysql
+```sql
 mysqlbinlog mysql-bin.000002 --start-position=787   --stop-position=1668|mysql -uroot -p111111
 ```
 
 **查看经过加密过的数据**
 
-```mysql
+```sql
 mysqlbinlog  --base64-output=DECODE-ROWS -v binlog_mysqlbin.000240    --start-datetime="2019-9-11 09:32:00" --stop-datetime="2019-9-11 09:38:00"
 ```
 
 常用参数选项解释：
 
-```mysql
+```sql
 --start-position=875 #起始pos点
 
 --stop-position=954 #结束pos点
@@ -485,7 +485,7 @@ mysqlbinlog  --base64-output=DECODE-ROWS -v binlog_mysqlbin.000240    --start-da
 
 **远程主机完整备份：**
 
-```mysql
+```sql
 mysqldump -uroot -p -P 1638 -h 21.22.71.23 --set-gtid-purged=OFF --single-transaction  -R -E -B xg_foms > xg_foms.sql
 ```
 
@@ -493,19 +493,19 @@ mysqldump -uroot -p -P 1638 -h 21.22.71.23 --set-gtid-purged=OFF --single-transa
 
 **mysqldump全量备份+mysqlbinlog二进制日志增量备份**
 
-```mysql
+```sql
 mysqldump -uroot -p -P 1000 -h 192.168.1.1 --set-gtid-purged=OFF --single-transaction  --flush-logs --master-data=2 -R -E -B fomsv4 > fomsv4.sql
 ```
 
 导入全量和增量数据
 
-```mysql
+```sql
 mysqldump -uroot -p < fomsv4.sql
 ```
 
 在生成下新的binglog日志文件（此时新文件为mysql-bin.002322）
 
-```mysql
+```sql
 flush logs
 ```
 
@@ -513,7 +513,7 @@ flush logs
 
 下图记录了新增binglog日志文件，恢复binglog日志到数据库即可
 
-```mysql
+```sql
 mysqlbinlog mysql-bin.002321 | mysql -uroot -p111111
 ```
 
@@ -523,7 +523,7 @@ mysqlbinlog mysql-bin.002321 | mysql -uroot -p111111
 
 将binglog日志转成sql文件
 
-```mysql
+```sql
 mysqlbinlog   mysql-bin.000011   > fomsv4.sql
 ```
 

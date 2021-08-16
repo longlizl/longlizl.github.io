@@ -1,4 +1,4 @@
-```mysql
+```sql
 -- 按小时统计每个盒子超速，重复计1
 SELECT
 	t.hours,

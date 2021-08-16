@@ -1,10 +1,10 @@
-```mysql
+```sql
 MySQL5.7 mysql.user表没有password字段改 authentication_string；
 ```
 
 * 1. 创建用户:
 
-```mysql
+```sql
 命令: CREATE USER 'username'@'host' IDENTIFIED BY 'password';
 
 例子: CREATE USER 'test'@'localhost' IDENTIFIED BY '123456';
@@ -21,7 +21,7 @@ password - 该用户的登陆密码,密码可以为空,如果为空则该用户�
 
 * 2. 授权:
 
-```mysql
+```sql
 命令:GRANT ALL privileges ON databasename.tablename TO 'username'@'host' WITH GRANT OPTION
 exp: privileges - 用户的操作权限,如SELECT , INSERT , UPDATE 等(详细列表见该文最后面).如果要授予所的权限则使用ALL.;databasename - 数据库名,tablename-表名,如果要授予该用户对所有数据库和表的相应操作权限则可用*表示, 如*.*
 例子: GRANT SELECT, INSERT ON mq.* TO 'dog'@'localhost';
@@ -29,7 +29,7 @@ exp: privileges - 用户的操作权限,如SELECT , INSERT , UPDATE 等(详细�
 
 * 3. 创建用户同时授权
 
-```mysql
+```sql
 mysql> grant all privileges on mq.* to test@localhost identified by '1234';
 
 Query OK, 0 rows affected, 1 warning (0.00 sec)
@@ -44,7 +44,7 @@ exp:必须执行 flush privileges;
 
 * 4. 设置与更改用户密码
 
-```mysql
+```sql
 1.命令:SET PASSWORD FOR 'username'@'host' = PASSWORD('newpassword');
 
 例子: SET PASSWORD FOR 'dog2'@'localhost' = PASSWORD("dog");
@@ -55,7 +55,7 @@ exp:必须执行 flush privileges;
 
 * 5. 撤销用户权限
 
-```mysql
+```sql
 命令: REVOKE all ON databasename.tablename FROM 'username'@'host';
 说明: privilege, databasename, tablename - 同授权部分.
 例子: REVOKE SELECT ON mq.* FROM 'dog2'@'localhost';
@@ -68,13 +68,13 @@ GRANT SELECT ON test.user TO 'dog'@'localhost', 则在使用REVOKE SELECT ON *.*
 
 * 6. 删除用户
 
-```mysql
+```sql
 DROP USER 'username'@'host';
 ```
 
 * 7. 查看用户的授权
 
-```mysql
+```sql
 mysql> show grants for dog@localhost;
 
 +---------------------------------------------+
@@ -96,19 +96,19 @@ PS:GRANT USAGE:mysql usage权限就是空权限，默认create user的权限，�
 
 * 8. 创建库并设置默认编码：
 
-```mysql
+```sql
 CREATE DATABASE `mydb` CHARACTER SET utf8 COLLATE utf8_general_ci;
 ```
 
 * 9. 某用户csuser无法查询到存储过程数据需要给mysql库授权
 
-```mysql
+```sql
 grant select on mysql.* TO 'csuser'@'%';
 ```
 
 * 10. 删除数据库中所有表：
 
-```mysql
+```sql
 SELECT CONCAT('drop table ',table_name,';') FROM information_schema.`TABLES` WHERE table_schema='jumpserver';
 ```
 
