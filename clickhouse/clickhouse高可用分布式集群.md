@@ -1,5 +1,5 @@
 # clickhouse分布式集群搭建
-## 一.环境准备：
+## 一. 环境准备：
 
 | 主机   | 系统     | 应用                     | IP              |
 | ------ | -------- | ------------------------ | --------------- |
@@ -267,7 +267,7 @@ vim /etc/clickhouse-server/config.d/metrika.xml
 | ckh-05 | 03   | ckh-05-01             |
 | ckh-06 | 03   | ckh-06-02             |
 
-## 三：用户密码配置
+## 三. 用户密码配置
 
 ```shell
 vim /etc/clickhouse-server/users.xml
@@ -322,7 +322,7 @@ show databases;
 
 ![img](https://longlizl.github.io/clickhouse/images/5.png)
 
-## 四: 查看集群信息
+## 四. 查看集群信息
 
 ### 任意一节点均可查看：
 
@@ -334,7 +334,7 @@ select * from system.clusters;
 
 ---
 
-## 五: 创建表
+## 五. 创建表
 
 ### 1. 创建本地表及分布式表：
 
@@ -392,7 +392,7 @@ select * from test.events_all;
 
 ---
 
-## 六: clickhouse常用操作
+## 六. clickhouse常用操作
 
 ### 1. clickhouse基本操作：
 
