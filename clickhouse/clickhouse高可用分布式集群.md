@@ -137,7 +137,7 @@ dnf -y install clickhouse-server clickhouse-client
 vim /etc/clickhouse-server/config.xml
 ```
 
-![img](https://longlizl.github.io/clickhouse/imgges/1.png)
+![img](https://longlizl.github.io/clickhouse/images/1.png)
 
 ## 2. 使用/etc/clickhouse-server/config.d/metrika.xml配置文件（推荐使用）
 
@@ -274,7 +274,7 @@ vim /etc/clickhouse-server/users.xml
 
 ## 1. 如果配置密文加密请参照注释说明
 
-![img](https://longlizl.github.io/clickhouse/imgges/2.png)
+![img](https://longlizl.github.io/clickhouse/images/2.png)
 
 ​	clickhouse 默认用户为default 无密码可以登录，我们可以改成其他用户 或禁用default
 
@@ -297,7 +297,7 @@ vim /etc/clickhouse-server/users.xml
 
 ​	高版本已取消 ，在使用flink运行任务时会出现连接clickhouse超时现象
 
-![img](https://longlizl.github.io/clickhouse/imgges/3.png)
+![img](https://longlizl.github.io/clickhouse/images/3.png)
 
 ## 3. 各节点启动服务：
 
@@ -311,7 +311,7 @@ systemctl start clickhouse-server
 clickhouse-client -h  192.168.205.190 --port 9000 -m -u admin --password 111111
 ```
 
-![img](https://longlizl.github.io/clickhouse/imgges/4.png)
+![img](https://longlizl.github.io/clickhouse/images/4.png)
 
 ​	查看数据库信息：
 
@@ -319,7 +319,7 @@ clickhouse-client -h  192.168.205.190 --port 9000 -m -u admin --password 111111
 show databases;
 ```
 
-![img](https://longlizl.github.io/clickhouse/imgges/5.png)
+![img](https://longlizl.github.io/clickhouse/images/5.png)
 
 # 四: 查看集群信息
 
@@ -329,7 +329,7 @@ show databases;
 select * from system.clusters;
 ```
 
-![img](https://longlizl.github.io/clickhouse/imgges/6.png)
+![img](https://longlizl.github.io/clickhouse/images/6.png)
 
 ---
 
@@ -353,7 +353,7 @@ create database test ON CLUSTER perftest_3shards_1replicas;
 CREATE TABLE IF NOT EXISTS test.events_local ON CLUSTER perftest_3shards_1replicas (  ts_date Date,  ts_date_time DateTime,  user_id Int64,  event_type String,  site_id Int64,  groupon_id Int64,  category_id Int64,  merchandise_id Int64,  search_text String ) ENGINE = ReplicatedMergeTree('/clickhouse/tables/{shard}/test/events_local','{replica}') PARTITION BY ts_date ORDER BY (ts_date,toStartOfHour(ts_date_time),site_id,event_type) SETTINGS index_granularity = 8192;
 ```
 
-![img](https://longlizl.github.io/clickhouse/imgges/7.png)
+![img](https://longlizl.github.io/clickhouse/images/7.png)
 
 ​	其中，ON CLUSTER语法表示分布式DDL，即执行一次就可在集群所有实例上创建同样的本地表。集群标识符{cluster}、分片标识	符{shard}和副本标识符{replica}来自之前提到过的复制表宏配置，即config.xml中<macros>一节的内容，配合ON CLUSTER语法	一同使用，可以避免建表时在每个实例上反复修改这些值。
 
@@ -369,9 +369,9 @@ ClickHouse分布式表的本质并不是一张表，而是一些本地物理表�
 CREATE TABLE IF NOT EXISTS test.events_all ON CLUSTER perftest_3shards_1replicas AS test.events_local ENGINE = Distributed(perftest_3shards_1replicas,test,events_local,rand());
 ```
 
-![img](https://longlizl.github.io/clickhouse/imgges/8.png)
+![img](https://longlizl.github.io/clickhouse/images/8.png)
 
-![img](https://longlizl.github.io/clickhouse/imgges/9.png)
+![img](https://longlizl.github.io/clickhouse/images/9.png)
 
 ### 2.1 任意节点插入数据：
 
@@ -385,7 +385,7 @@ insert into test.events_all values('2021-03-04','2021-04-03 16:10:00',1,'ceshi1'
 select * from test.events_all;
 ```
 
-![img](https://longlizl.github.io/clickhouse/imgges/10.png)
+![img](https://longlizl.github.io/clickhouse/images/10.png)
 
 ​	查看副本节点也复制了一份同样的数据
 
@@ -426,7 +426,7 @@ alter table test.events_local ON CLUSTER perftest_3shards_1replicas delete where
 select * from system.zookeeper WHERE path='/'
 ```
 
-![img](https://longlizl.github.io/clickhouse/imgges/11.png)
+![img](https://longlizl.github.io/clickhouse/images/11.png)
 
 ### 6. ck数据导出到csv文件
 
