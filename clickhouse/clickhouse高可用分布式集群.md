@@ -300,7 +300,7 @@ vim /etc/clickhouse-server/users.xml
 
 ![img](https://longlizl.github.io/clickhouse/images/3.png)
 
-## 3. 各节点启动服务：
+### 3. 各节点启动服务：
 
 ```shell
 systemctl start clickhouse-server
