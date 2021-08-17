@@ -28,7 +28,7 @@ systemctl start node_exporter
 systemctl status node_exporter
 ```
 
-![image-20210816135622782](https://longlizl.github.io/clickhouse/images/12.png)
+![image-20210816135622782](https://longlizl.github.io/clickhouse/images/18.png)
 
 ​	其余节点按照上述步骤安装
 
@@ -128,21 +128,21 @@ tcp    LISTEN     0      128      :::3000                 :::*                  
 
 ​	浏览器打开http://192.168.205.195:3000（默认用户名密码均为admin）,登录后提示修改密码：
 
-![image-20210816175236905](https://longlizl.github.io/clickhouse/images/13.png)
+![image-20210816175236905](https://longlizl.github.io/clickhouse/images/12.png)
 
 ### 4.2 配置数据源
 
-​	![image-20210816175500628](https://longlizl.github.io/clickhouse/images/14.png)
+​	![image-20210816175500628](https://longlizl.github.io/clickhouse/images/13.png)
 
-![image-20210816175702453](https://longlizl.github.io/clickhouse/images/15.png)
+![image-20210816175702453](https://longlizl.github.io/clickhouse/images/14.png)
 
 #### 4.2.1  从grafana官网下载node_expoter相关监控模板导入
 
-![image-20210816180421084](https://longlizl.github.io/clickhouse/images/16.png)
+![image-20210816180421084](https://longlizl.github.io/clickhouse/images/15.png)
 
-![image-20210816180205949](https://longlizl.github.io/clickhouse/images/17.png)
+![image-20210816180205949](https://longlizl.github.io/clickhouse/images/16.png)
 
 #### 4.2.1  从grafana官网下载ClickHouse internal exporter metrics相关监控模板导入
 
-![image-20210816180906562](https://longlizl.github.io/clickhouse/images/18.png)
+![image-20210816180906562](https://longlizl.github.io/clickhouse/images/17.png)
 
