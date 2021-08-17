@@ -4,7 +4,7 @@
 * clickhouse
   * [clickhouse高可用分布式集群](clickhouse\clickhouse高可用分布式集群.md)
   * [clickhouse常见问题排查](clickhouse\clickhouse常见问题排查.md)
-  * [clickhouse集群监控]()
+  * [clickhouse集群监控](clickhouse\clickhouse服务监控.md)
 * mycat
   * [mycat高可用读写分离水平分表](mycat高可用读写分离水平分表\keeplived+mycat+mysql高可用读写分离水平分表.md)
 * mysql
