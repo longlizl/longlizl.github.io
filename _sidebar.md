@@ -18,6 +18,8 @@
   * [mysql导入数据超级权限问题](mysql相关\mysql转移数据库出现超级权限限制问题.md)
   * [shell脚本基本mysql操作](mysql相关\Shell脚本连接创建数据库.md)
   * [test]()
-
-
+* [sort,sed,uniq,split常用命令](sort_sed_uniq_split使用\sort_sed_uniq_split.md)
+* [tcpdump抓包工具](tcpdump抓包工具\linux使用tcpdump抓包工具抓取网络数据包.md)
+* [swap](swap\开启CentOS7下面的swap分区.md)
+* 
 

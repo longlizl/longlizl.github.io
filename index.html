@@ -9,12 +9,14 @@
     <meta name="description" content="龙哥的网站，收集、整理、工作常用的知识">
     <meta name="keywords" content="kali,linux,剪辑">
     <meta name="author" content="YYDS">
-    <title>龙哥</title>
+    <title>星辰大海</title>
     <!-- docsify的主题样式 -->
     <link rel="stylesheet" href="//cdn.jsdelivr.net/npm/docsify/lib/themes/vue.css">
     <!-- 侧边栏插件的样式 -->
-    <link rel="stylesheet" href="//cdn.jsdelivr.net/npm/docsify-sidebar-collapse/dist/sidebar.min.css" />
+    <!-- <link rel="stylesheet" href="//cdn.jsdelivr.net/npm/docsify-sidebar-collapse/dist/sidebar.min.css" />  -->
 	<link rel="stylesheet" href="https://unpkg.com/docsify-toc@1.0.0/dist/toc.css">
+	<!-- <link rel="stylesheet" href="//cdn.jsdelivr.net/npm/docsify-sidebar-collapse/dist/sidebar.min.css" /> -->
+	<link rel="stylesheet" href="//cdn.jsdelivr.net/npm/docsify-sidebar-collapse/dist/sidebar-folder.min.css" />
 </head>
 <body>
   <div id="app">很快！等一下下哦！</div>
@@ -27,8 +29,12 @@
             // 开启侧边栏，需要目录下有_sidebar.md文件
             loadSidebar: true,
             // 读取md文件中最大几级目录
-            subMaxLevel: 2,
-            // 切换页面后跳回页面顶部
+            subMaxLevel: 3,
+			    alias: {
+					'/.*/_sidebar.md': '/_sidebar.md',
+				},
+			sidebarDisplayLevel: 1, // set sidebar display level
+             // 切换页面后跳回页面顶部
             auto2top: true,
             // 指定开始页
             //homepage: '_home.md',
@@ -37,7 +43,7 @@
             // 侧边栏左侧的logo
             logo: '',
             // 侧边栏顶部的标题
-            name: '龙哥',
+            name: '星辰大海',
             // 点击标题后的跳转地址
             nameLink: '/',
             // 禁用emoji
@@ -58,7 +64,7 @@
                 noData: '找不到结果',
                 depth: 4,
                 hideOtherSidebarContent: false,
-                namespace: '龙哥'
+                namespace: '星辰大海'
             },
             // 字数插件
             count:{
@@ -154,6 +160,9 @@
     <script src="//cdn.jsdelivr.net/npm/@alertbox/docsify-footer/dist/docsify-footer.min.js"></script>
 	<!-- 分享插件 -->
 	<script src="//unpkg.com/docsify-share/build/index.min.js"></script>
+	<!-- plugins -->
+	<script src="//cdn.jsdelivr.net/npm/docsify-sidebar-collapse/dist/docsify-sidebar-collapse.min.js"></script>
+	
 
 </body>
 </html>
