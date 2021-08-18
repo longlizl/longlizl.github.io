@@ -36,14 +36,14 @@
 4.awk '/Failed/{print $(NF-3)}' /var/log/secure  | sort | uniq -c | sort -t' ' -k 1 -nr  #按照访问次数从高到低排序
 ```
 
-![img](https://longlizl.github.io/sort,sed,uniq,split 使用/images/1.png)
+![img](https://longlizl.github.io/sort_sed_uniq_split使用/images/1.png)
 
 ```shell
 5.打印某一列数据并过滤空行（awk NF）并按照出现频率次数倒序排序
 cat serverForkliftStatus_log_2020-12-29.log | grep -i hzszd | awk -F',' '{print $2}' | awk NF | sort | uniq -c | sort -t' ' -k 1 -nr
 ```
 
-![img](https://longlizl.github.io/sort,sed,uniq,split 使用/images/2.png)
+![img](https://longlizl.github.io/sort_sed_uniq_split使用/images/2.png)
 
 ##  3. sed行处理
 
