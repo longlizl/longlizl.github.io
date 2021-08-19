@@ -1,4 +1,4 @@
-# mycat 读写分离水平分表
+# MYCAT读写分离水平分表
 
 ## 一：环境准备：
 
@@ -11,7 +11,9 @@
 
 mysql主从环境（略）
 
-## 二: 主机（192.168.205.183，192.168.205.182）上安装jdk，mycat，keeplived
+## 二: 安装配置MYCAT读写分离
+
+主机（192.168.205.183，192.168.205.182）上安装jdk，mycat，keeplived
 
 以192.168.205.183主机为例，另外一台主机配置与183主机一致：
 
@@ -185,7 +187,7 @@ systemctl start keepalived
 
 ![img](https://longlizl.github.io/mycat高可用读写分离水平分表/images/18.png)
 
-### 11. 在mysql节点上我们通过vip接口登录试下
+### 10. 在mysql节点上我们通过vip接口登录试下
 
 ```mysql
 mysql -ulilong -p111111 -P8066 -h 192.168.205.250
@@ -211,9 +213,9 @@ mysql -ulilong -p111111 -P8066 -h 192.168.205.250
 
 **到此为止基本完成配置，可仔细想想如果是所在keepalived的master节点mycat服务有问题那它还会切换到备用节点吗。答案肯定是否定的。这就需要在keepalived 配置脚本来检测mycat服务状态如果所在节点master的mycat服务挂掉了， 那就主动结束所在master节点的keepalived进程切换至备用节点继续提供服务**
 
-# 三. 创建脚本检测mycat服务
+# 三: 创建脚本检测MYCAT服务
 
-## 1. 在mycat所在2节点分别创建存放脚本的文件
+## 1. 在MYCAT所在2节点分别创建存放脚本的文件
 
 ```shell
 mkdir -p /etc/keepalived/scripts
@@ -273,7 +275,7 @@ cd /opt/mycat/bin && ./mycat stop
 
 ![img](https://longlizl.github.io/mycat高可用读写分离水平分表/images/28.png)
 
-# 四. 配置MASTER<-->slave 相互切换时邮件通知
+# 四: 配置MASTER<-->slave 相互切换时邮件通知
 
 ## 1. 在2个keepalived节点安装postfix邮件服务（默认已安装）和 发送邮件插件mailx
 
@@ -350,7 +352,7 @@ systemctl restart  keepalived
 
 ---
 
-# 五. mycat分表
+# 五: MYCAT分表
 
 ## 创建库表
 
