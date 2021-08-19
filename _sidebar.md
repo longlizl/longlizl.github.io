@@ -7,6 +7,19 @@
   * [clickhouse集群监控](clickhouse\clickhouse服务监控.md)
 * mycat
   * [mycat高可用读写分离水平分表](mycat高可用读写分离水平分表\keeplived+mycat+mysql高可用读写分离水平分表.md)
+* kali渗透
+  * 端口探测扫描
+    * [nc用法](kali相关\端口探测扫描\nc传输文件端口扫描硬盘克隆.md)
+    * [nmap用法](kali相关\端口探测扫描\nmap扫描工具.md)
+  * 简单dos攻击
+    * [hping3简单SYN洪水攻击](kali相关\简单dos攻击\hping3简单SYN洪水攻击.md)
+  * 木马制作
+    * [msfvenom生成后门木马](kali相关\木马制作\msfvenom生成后门木马文件.md)
+    * [weevely生成图片木马](kali相关\木马制作\weevely生成图片木马.md)
+  * 永恒之蓝漏洞
+    * [永恒之蓝](kali相关\永恒之蓝漏洞\kali利用永恒之蓝漏洞入侵win7系统.md)
+  * arp欺骗
+    * [使用arpspoof进行arp欺骗](kali相关\arp欺骗\使用arpspoof进行arp欺骗.md)
 * mysql
   * [mysql联合索引](mysql相关\联合唯一索引.md)
   * [查看锁,事务,进程](mysql相关\查看锁表_等待锁_事务_进程_批量结束进程.md)
