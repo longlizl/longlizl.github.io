@@ -18,6 +18,6 @@
 >
 > 倚楼听风雨，淡忘江湖路。
 
-[GitHub](https://github.com/Hanxueqing/Douban-Movie.git)
+[GitHub](README.md)
 [Get Started](README.md)
 
