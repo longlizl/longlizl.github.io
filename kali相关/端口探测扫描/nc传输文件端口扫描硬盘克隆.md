@@ -87,7 +87,7 @@ vim /scripts/ip-ports.txt
 vim /scripts/ncports.sh
 
 #!/bin/bash  
-#检测服务器端口是否开放，成功会返回0值显示ok，失败会返回1值显示fail  
+# 检测服务器端口是否开放，成功会返回0值显示ok，失败会返回1值显示fail  
 cat /scripts/ip-ports.txt | while read line  
 do  
  	nc -w 10 -z $line > /dev/null 2>&1  
@@ -151,7 +151,7 @@ HOSTB: nc -nv 192.168.205.106 1234 | mplayer -vo x11 -cache 3000 -
 ```shell
 # 扫描tcp
 nc -nvz 192.168.205.106 1-65535 
-#扫描udp
+# 扫描udp
 nc -nvzu 192.168.205.106 1-1024 
 ```
 
