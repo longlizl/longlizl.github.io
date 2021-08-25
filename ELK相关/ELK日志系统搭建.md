@@ -80,7 +80,7 @@ http.port: 9200
 # 集群主机列表
 discovery.seed_hosts: ["elk-01","elk-02","elk-03"]
 # 可被选举为主节点的列表，注：列表中为各节点的node.name
-cluster.initial_master_nodes: ["node-1","node-2","node-03"]
+cluster.initial_master_nodes: ["node-1","node-2","node-3"]
 ```
 
 elk-02:
@@ -103,7 +103,7 @@ http.port: 9200
 # 集群主机列表
 discovery.seed_hosts: ["elk-01","elk-02","elk-03"]
 # 可被选举为主节点的列表，注：列表中为各节点的node.name
-cluster.initial_master_nodes: ["node-1","node-2","node-03"]
+cluster.initial_master_nodes: ["node-1","node-2","node-3"]
 ```
 
 elk-03:
@@ -126,7 +126,7 @@ http.port: 9200
 # 集群主机列表
 discovery.seed_hosts: ["elk-01","elk-02","elk-03"]
 # 可被选举为主节点的列表，注：列表中为各节点的node.name
-cluster.initial_master_nodes: ["node-1","node-2","node-03"]
+cluster.initial_master_nodes: ["node-1","node-2","node-3"]
 ```
 
 各个节点启动elasticsearch
