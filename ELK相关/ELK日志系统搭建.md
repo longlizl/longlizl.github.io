@@ -45,7 +45,7 @@ EOF
 
 4. java环境安装
 
-   上传jdk8安装包解压安装
+   上传jdk11安装包解压安装
 
 ```shell
 tar -zxvf jdk-11.0.12_linux-x64_bin.tar.gz && mv jdk-11.0.12 /usr/local/jdk
