@@ -13,7 +13,7 @@
 | elk-01      | 192.168.205.132 | jdk-11.0.12,Elasticsearch 7.14 |
 | elk-02      | 192.168.205.133 | jdk-11.0.12,Elasticsearch 7.14 |
 | elk-03      | 192.168.205.134 | jdk-11.0.12,Elasticsearch 7.14 |
-| kinbana     | 192.168.205.135 | jdk-11.0.12,kinbana 7.14       |
+| kibana      | 192.168.205.135 | jdk-11.0.12,kibana 7.14        |
 | filebeat-01 | 192.168.205.136 | jdk-11.0.12,filebeat 7.14      |
 | redis       | 192.168.205.137 | redis 5.0                      |
 | logstash    | 192.168.205.138 | jdk-11.0.12,logstash 7.14      |
@@ -173,9 +173,9 @@ curl 192.168.205.132:9200/_cat/indices?v
    ![image-20210824175656307](https://longlizl.github.io/ELK相关/images/5.png)
 
    其中索引分片默认为5分片1副本，其中绿色方块边框未加粗的为副本分片
-## 三. kinbana安装
+## 三. kibana安装
 
-kinbana:
+kibana:
 	pass
 ............
 ............
