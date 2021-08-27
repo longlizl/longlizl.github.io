@@ -27,6 +27,15 @@
   * [sockks5代理](代理服务\Linux搭建Socks5代理服务器.md)
   * [linux全局代理](代理服务\linux配置全局代理.md)
 * mysql
+  * MHA
+    * [MHA高可用架构](mysql相关\MHA\MHA高可用架构.md)
+  * mysql备份还原
+    * [云数据库xb格式逻辑备份文件导入数据库](mysql相关\mysql备份还原\云数据库xb格式逻辑备份文件导入数据库.md)
+    * [innobackupex数据库备份工具](mysql相关\mysql备份还原\innobackupex数据库备份工具安装使用.md)
+    * [mysqldump备份和恢复](mysql相关\mysql备份还原\mysqldump备份和恢复.md)
+  * shell操作mysql
+    * [shell将nginx访问日志统计到mysql](mysql相关\shell脚本操作mysql\Shell脚本连接创建数据库.md)
+    * [shell连接mysql](mysql相关\shell脚本操作mysql\shell脚本连接mysql.md)
   * [mysql联合索引](mysql相关\联合唯一索引.md)
   * [查看锁,事务,进程](mysql相关\查看锁表_等待锁_事务_进程_批量结束进程.md)
   * [慢查询检测与记录](mysql相关\慢查询检测与记录.md)
