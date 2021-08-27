@@ -14,7 +14,7 @@
 | elk-02      | 192.168.205.133 | jdk-11.0.12,Elasticsearch 7.14 | centos 7.9 |
 | elk-03      | 192.168.205.134 | jdk-11.0.12,Elasticsearch 7.14 |        centos 7.9 |
 | kibana      | 192.168.205.135 | kibana 7.14                    |       centos 7.9 |
-| filebeat-01 | 192.168.205.136 | jdk-11.0.12,filebeat 7.14      |       centos 7.9 |
+| filebeat-01 | 192.168.205.136 | filebeat 7.14                  |       centos 7.9 |
 | redis       | 192.168.205.137 | redis 5.0                      |       centos 7.9 |
 | logstash    | 192.168.205.138 | jdk-11.0.12,logstash 7.14      |       centos 7.9 |
 
