@@ -22,6 +22,10 @@
     * [永恒之蓝](kali相关\永恒之蓝漏洞\kali利用永恒之蓝漏洞入侵win7系统.md)
   * arp欺骗
     * [使用arpspoof进行arp欺骗](kali相关\arp欺骗\使用arpspoof进行arp欺骗.md)
+* 代理服务
+  * [kali动态代理](代理服务\kali配置动态代理.md)
+  * [sockks5代理](代理服务\Linux搭建Socks5代理服务器.md)
+  * [linux全局代理](代理服务\linux配置全局代理.md)
 * mysql
   * [mysql联合索引](mysql相关\联合唯一索引.md)
   * [查看锁,事务,进程](mysql相关\查看锁表_等待锁_事务_进程_批量结束进程.md)
