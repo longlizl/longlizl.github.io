@@ -9,6 +9,8 @@
   * [mycat高可用读写分离水平分表](mycat高可用读写分离水平分表\keeplived+mycat+mysql高可用读写分离水平分表.md)
 * ELK日志系统
   * [ELK日志系统搭建](ELK相关\ELK日志系统搭建.md)
+* Hadoop
+  * [Hadoop高可用完全分布式集群](hadoop相关\Hadoop高可用完全分布式集群.md)
 * kali渗透
   * 端口探测扫描
     * [nc用法](kali相关\端口探测扫描\nc传输文件端口扫描硬盘克隆.md)
@@ -22,6 +24,12 @@
     * [永恒之蓝](kali相关\永恒之蓝漏洞\kali利用永恒之蓝漏洞入侵win7系统.md)
   * arp欺骗
     * [使用arpspoof进行arp欺骗](kali相关\arp欺骗\使用arpspoof进行arp欺骗.md)
+* nginx
+  * [Nginx实现负载均衡的几种方式](nginx相关\Nginx实现负载均衡的几种方式.md)
+  * [nginx常用内置变量](nginx相关\nginx常用内置变量.md)
+  * [nginx代理微信小程序验证文件](nginx相关\nginx代理验证微信小程序验证文件.md)
+  * [nginx代理vue项目刷新页面404的问题](nginx相关\nginx代理vue项目刷新页面404的问题.md)
+  * [nginx配置ssl证书](nginx相关\nginx配置ssl证书.md)
 * 代理服务
   * [kali动态代理](代理服务\kali配置动态代理.md)
   * [sockks5代理](代理服务\Linux搭建Socks5代理服务器.md)
