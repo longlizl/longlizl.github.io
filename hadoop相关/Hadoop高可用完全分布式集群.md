@@ -28,9 +28,9 @@
 | ResourceManager | ResourceManager | 8042 | yarn-site.xml |                                                              |
 |                 |                 |      |               |                                                              |
 
-![img](D:\software\youdao_file\weixinobU7Vji2jSDT8WUoQ-GPtcbtUpic\5c100a4c06cd4219b0dd1b231cb99e4a\clipboard.png)
+![img](https://longlizl.github.io/hadoop相关/images/1.png)
 
-![img](D:\software\youdao_file\weixinobU7Vji2jSDT8WUoQ-GPtcbtUpic\34aad3bbbdaf452f98ce47f4043c921e\0388e4e6b1cd02853e2723132739f66.jpg)
+![img](https://longlizl.github.io/hadoop相关/images/2.jpg)
 
 - NameNode
 
@@ -184,7 +184,7 @@ cd /opt/zookeeper/bin
 
 ​	查看各节点状态
 
-![img](D:\software\youdao_file\weixinobU7Vji2jSDT8WUoQ-GPtcbtUpic\0f8c4e8d774d4ff9a08c6ef655313561\clipboard.png)
+![img](https://longlizl.github.io/hadoop相关/images/3.png)
 
 ![img](D:\software\youdao_file\weixinobU7Vji2jSDT8WUoQ-GPtcbtUpic\cc0f10480ec945bdaa22f0fcec2c8bc5\clipboard.png)
 
