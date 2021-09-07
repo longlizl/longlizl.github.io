@@ -186,9 +186,9 @@ cd /opt/zookeeper/bin
 
 ![img](https://longlizl.github.io/hadoop相关/images/3.png)
 
-![img](D:\software\youdao_file\weixinobU7Vji2jSDT8WUoQ-GPtcbtUpic\cc0f10480ec945bdaa22f0fcec2c8bc5\clipboard.png)
+![img](https://longlizl.github.io/hadoop相关/images/4.png)
 
-![img](D:\software\youdao_file\weixinobU7Vji2jSDT8WUoQ-GPtcbtUpic\6654b41444b64d7ca731831cb1b2bed6\clipboard.png)
+![img](https://longlizl.github.io/hadoop相关/images/5.png)
 
 # 四.搭建hadoop集群
 
@@ -217,7 +217,7 @@ cd /opt/hadoop/etc/hadoop
 vim hadoop-env.sh
 ```
 
-![img](D:\software\youdao_file\weixinobU7Vji2jSDT8WUoQ-GPtcbtUpic\34fa208c1e11428ab7c13d4055166dd3\clipboard.png)
+![img](https://longlizl.github.io/hadoop相关/images/6.png)
 -  2. core-site.xml:
 
 ​	     vim core-site.xml
@@ -544,27 +544,27 @@ cd /opt/hadoop/sbin
 ./start-all.sh
 ```
 
-![img](D:\software\youdao_file\weixinobU7Vji2jSDT8WUoQ-GPtcbtUpic\1dfcb76a38394813882f4798d511f221\clipboard.png)
+![img](https://longlizl.github.io/hadoop相关/images/7.png)
 
 # 各节点启动进程如图
 
 hadoop-master:
 
-![img](D:\software\youdao_file\weixinobU7Vji2jSDT8WUoQ-GPtcbtUpic\6cd9b4c1ead449bcb76fae802fe5cef3\clipboard.png)
+![img](https://longlizl.github.io/hadoop相关/images/8.png)
 
 hadoop-node-1:
 
-![img](D:\software\youdao_file\weixinobU7Vji2jSDT8WUoQ-GPtcbtUpic\c9e1cc99f2024c19b9a7be1593e5f7a6\clipboard.png)
+![img](https://longlizl.github.io/hadoop相关/images/9.png)
 
 hadoop-node-2:
 
-![img](D:\software\youdao_file\weixinobU7Vji2jSDT8WUoQ-GPtcbtUpic\6a51fec36d064c3bb5dcab8ec78e6f85\clipboard.png)
+![img](https://longlizl.github.io/hadoop相关/images/10.png)
 
 ---
 
 # 新版本启动报错解决办法
 
-![img](D:\software\youdao_file\weixinobU7Vji2jSDT8WUoQ-GPtcbtUpic\3061eb6a837149df8fe11c558edc055c\clipboard.png)
+![img](https://longlizl.github.io/hadoop相关/images/11.png)
 
  输入如下命令，在环境变量中添加下面的配置（其中用户根据所在服务启动的用户修改）
 
