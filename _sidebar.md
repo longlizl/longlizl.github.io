@@ -33,8 +33,12 @@
   * [nginx+waf](nginx相关\nginx+waf防火墙.md)
 * 代理服务
   * [kali动态代理](代理服务\kali配置动态代理.md)
+  
   * [sockks5代理](代理服务\Linux搭建Socks5代理服务器.md)
+  
   * [linux全局代理](代理服务\linux配置全局代理.md)
+* gitlab
+  * [gitlab安装](代码版本管理\gitlab\gitlab安装部署.md)
 * mysql
   * MHA
     * [MHA高可用架构](mysql相关\MHA\MHA高可用架构.md)
