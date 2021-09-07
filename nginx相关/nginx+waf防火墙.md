@@ -95,7 +95,7 @@ init_by_lua_file  /opt/nginx/conf/waf/init.lua;
 access_by_lua_file /opt/nginx/conf/waf/waf.lua;
 ```
 
-![image-20210601171442802](https://longlizl.github.io/nginx相关images/1.png)
+![image-20210601171442802](https://longlizl.github.io/nginx相关/images/1.png)
 
 配置config.lua里的waf规则目录(一般在waf/conf/目录下)：
 
@@ -104,7 +104,7 @@ cd /opt/nginx/conf/waf/conf
 vim config.lua
 ```
 
-![image-20210601172128491](https://longlizl.github.io/nginx相关images/2.png)
+![image-20210601172128491](https://longlizl.github.io/nginx相关/images/2.png)
 
 
 
