@@ -12,7 +12,7 @@ curl -s https://packages.gitlab.com/install/repositories/gitlab/gitlab-ce/script
 yum install -y gitlab-ce-13.9.3-ce.0.el7.x86_64
 ```
 
-![img](D:\software\youdao_file\weixinobU7Vji2jSDT8WUoQ-GPtcbtUpic\0ad56e5056394424be1d815a2148eed3\clipboard.png)
+![img](https://longlizl.github.io/gitlab/images/1.png)
 
 3. 修改配置文件（配置访问地址及邮件服务）
 
@@ -20,7 +20,7 @@ yum install -y gitlab-ce-13.9.3-ce.0.el7.x86_64
 vim /etc/gitlab/gitlab.rb
 ```
 
-![img](D:\software\youdao_file\weixinobU7Vji2jSDT8WUoQ-GPtcbtUpic\ded5e23a6e614d8aa045eb09c09dd5fc\clipboard.png)
+![img](https://longlizl.github.io/gitlab/images/2.png)
 
 ```shell
 gitlab_rails['smtp_enable'] = true
@@ -38,7 +38,7 @@ user["git_user_email"] = "xxxxx@xxxxx.com.cn"
 
 4. gitlab重新加载配置文件
 
-![img](D:\software\youdao_file\weixinobU7Vji2jSDT8WUoQ-GPtcbtUpic\c350ba2c28204a5fad0c8c134a416325\clipboard.png)
+![img](https://longlizl.github.io/gitlab/images/3.png)
 
 ```shell
 gitlab-ctl reconfigure
@@ -50,7 +50,7 @@ gitlab-ctl reconfigure
 gitlab-ctl start
 ```
 
-![img](D:\software\youdao_file\weixinobU7Vji2jSDT8WUoQ-GPtcbtUpic\44096c5d4e62491fa61b20912e0829e2\clipboard.png)
+![img](https://longlizl.github.io/gitlab/images/4.png)
 
 5. 邮件测试
 
@@ -59,13 +59,13 @@ gitlab-rails console
 Notify.test_email('1550789579@qq.com','Message Subject','message Body').deliver_now
 ```
 
-![img](D:\software\youdao_file\weixinobU7Vji2jSDT8WUoQ-GPtcbtUpic\f4d31a26b6d849aaa4f3df96c31b254d\clipboard.png)
+![img](https://longlizl.github.io/gitlab/images/5.png)
 
-![img](D:\software\youdao_file\weixinobU7Vji2jSDT8WUoQ-GPtcbtUpic\c562092e5712424aba8d233a9f2e87db\clipboard.png)
+![img](https://longlizl.github.io/gitlab/images/11.png)
 
 6. 浏览器访问http://192.168.205.250/
 
-![image-20210907095020705](C:\Users\15507\AppData\Roaming\Typora\typora-user-images\image-20210907095020705.png)
+![image-20210907095020705](https://longlizl.github.io/gitlab/images/6.png)
 
 7. 给访问加自签名证书提供https连接访问
 
@@ -106,11 +106,11 @@ gitlab-ctl start
 
 访问gitlab服务：
 
-![img](D:\software\youdao_file\weixinobU7Vji2jSDT8WUoQ-GPtcbtUpic\48cf05eeae074d5fa663b10b963a324c\clipboard.png)
+![img](https://longlizl.github.io/gitlab/images/7.png)
 
 当使用git通过https协议拉取仓库代码报错
 
-![img](D:\software\youdao_file\weixinobU7Vji2jSDT8WUoQ-GPtcbtUpic\cb88e516cbcb40a286a0c829750d7203\clipboard.png)
+![img](https://longlizl.github.io/gitlab/images/8.png)
 
 由于是自签名证书我们需要关掉验证
 
@@ -118,7 +118,7 @@ gitlab-ctl start
 git config --global http.sslVerify false
 ```
 
-![img](D:\software\youdao_file\weixinobU7Vji2jSDT8WUoQ-GPtcbtUpic\848f001e16f54fa0aa3c8d41f9110ed8\clipboard.png)
+![img](https://longlizl.github.io/gitlab/images/9.png)
 
 # 项目备份与恢复
 
@@ -137,7 +137,7 @@ gitlab_rails[‘backup_keep_time’] = 604800   # 单位S
    gitlab-rake gitlab:backup:create
    ```
 
-   ![image-20210625092258242](C:\Users\15507\AppData\Roaming\Typora\typora-user-images\image-20210625092258242.png)
+   ![image-20210625092258242](https://longlizl.github.io/gitlab/images/10.png)
 
    定时任务备份
 
