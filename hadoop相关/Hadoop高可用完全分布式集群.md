@@ -30,7 +30,7 @@
 
 ![img](https://longlizl.github.io/hadoop相关/images/1.png)
 
-![img](https://longlizl.github.io/hadoop相关/images/2.jpg)
+![img](https://longlizl.github.io/hadoop相关/images/2.png)
 
 - NameNode
 
