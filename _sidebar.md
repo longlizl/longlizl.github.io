@@ -38,7 +38,7 @@
   
   * [linux全局代理](代理服务\linux配置全局代理.md)
 * gitlab
-  * [gitlab安装](代码版本管理\gitlab\gitlab安装部署.md)
+  * [gitlab安装](gitlab\gitlab安装部署.md)
 * mysql
   * MHA
     * [MHA高可用架构](mysql相关\MHA\MHA高可用架构.md)
