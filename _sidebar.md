@@ -31,6 +31,8 @@
   * [nginx代理vue项目刷新页面404的问题](nginx相关\nginx代理vue项目刷新页面404的问题.md)
   * [nginx配置ssl证书](nginx相关\nginx配置ssl证书.md)
   * [nginx+waf](nginx相关\nginx+waf防火墙.md)
+* python
+  * [python表格数据可视化展示](python\python表格数据可视化展示.md)
 * 代理服务
   * [kali动态代理](代理服务\kali配置动态代理.md)
   
