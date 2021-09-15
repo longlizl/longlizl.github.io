@@ -1,0 +1,26 @@
+1.standalone模式下,任务运行一段时间taskmanager挂掉,报错如下:
+
+```shell
+Task ‘Source: Custom Source -> Map -> Map -> to: Row -> Map -> Sink: Unnamed (1/3)’ did not react to cancelling signal for 30 seconds Task did not exit gracefully within 180 + seconds. 
+```
+
+修改配置文件flink-conf.yaml,添加配置task.cancellation.timeout: 0
+
+这个配置的含义是,超时（以毫秒为单位），在此之后任务取消超时并导致致命的TaskManager错误。 值为0将禁用watch dog
+
+2.取消job任务后taskmanager节点挂掉
+
+配置文件中加入如下参数：
+
+```shell
+task.cancellation.timeout: 0
+```
+
+![img](D:\software\youdao_file\weixinobU7Vji2jSDT8WUoQ-GPtcbtUpic\c664b0383b724c469aa367c8d25b0aa6\clipboard.png)
+
+禁用web提交
+
+```shell
+web.submit.enable: false 
+```
+
