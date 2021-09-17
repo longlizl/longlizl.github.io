@@ -35,6 +35,7 @@
   * [shell简单监控flink任务故障告警](flink相关\使用shell监控任务故障邮件告警.md)
 * python
   * [python表格数据可视化展示](python\python表格数据可视化展示.md)
+  * [向excel表中某列随机插入数据](python\python向表中一列随机插入数据)
 * 代理服务
   * [kali动态代理](代理服务\kali配置动态代理.md)
   
