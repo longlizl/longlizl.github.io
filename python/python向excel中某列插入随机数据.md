@@ -32,4 +32,3 @@ for i in table.index:
 table.set_index('关键字',inplace=True)
 table.to_excel(r'c:\Users\15507\Desktop\运维支持工作日报(2021.9.11 - 2021.9.17)_bak.xlsx')
 ```
-
