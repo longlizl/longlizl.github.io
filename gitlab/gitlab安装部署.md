@@ -120,7 +120,7 @@ git config --global http.sslVerify false
 
 ![img](https://longlizl.github.io/gitlab/images/9.png)
 
-# 项目备份与恢复
+项目备份与恢复
 
 1. 修改备份路径及备份保留的时间（路径可以默认不用更改）
 
