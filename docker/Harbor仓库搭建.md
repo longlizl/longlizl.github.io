@@ -40,7 +40,7 @@ curl -L https://github.com/docker/compose/releases/download/1.27.4/docker-compos
 [root@localhost ~]# chmod +x /usr/local/bin/docker-compose
 ```
 
-![img](D:\software\youdao_file\weixinobU7Vji2jSDT8WUoQ-GPtcbtUpic\cfe79a5e303a4f23a3f8f7f985cd9404\clipboard.png)
+![img](https://longlizl.github.io\docker\images\12.png)
 
 # 三、Harbor服务搭建及启动
 
@@ -62,15 +62,15 @@ cp harbor.yml.tmpl  harbor.yml
 
 这里没有配置https证书先取消
 
-![img](https://longlizl.github.io\docker\images\12.png)
+![img](https://longlizl.github.io\docker\images\13.png)
 
 执行安装  ./install.sh  拉取镜像
 
-![img](https://longlizl.github.io\docker\images\13.png)
+![img](https://longlizl.github.io\docker\images\14.png)
 
 查看容器启动状态
 
-![img](https://longlizl.github.io\docker\images\14.png)
+![img](https://longlizl.github.io\docker\images\15.png)
 
 启动完成后，访问刚设置的hostname即可，默认是80端口，如果端口占用，可以去修改docker-compose.yml文件中，对应服务的端口映射
 
@@ -78,11 +78,11 @@ cp harbor.yml.tmpl  harbor.yml
 
 ## 1、登录Web Harbor
 
-![img](https://longlizl.github.io\docker\images\15.png)
+![img](https://longlizl.github.io\docker\images\16.png)
 
 使用admin用户登录，密码为111111
 
-![img](https://longlizl.github.io\docker\images\16.png)
+![img](https://longlizl.github.io\docker\images\17.png)
 
 ## 1、上传镜像到Harbor仓库
 
@@ -100,7 +100,7 @@ cp harbor.yml.tmpl  harbor.yml
 [root@centos8_sc harbor]# docker login http://192.168.205.178 Username: admin Password: 
 ```
 
-![img](https://longlizl.github.io\docker\images\17.png)
+![img](https://longlizl.github.io\docker\images\18.png)
 
 解决方法：
 
@@ -120,17 +120,17 @@ systemctl daemon-reload
 systemctl restart docker
 ```
 
-![img](https://longlizl.github.io\docker\images\18.png)
+![img](https://longlizl.github.io\docker\images\19.png)
 
 ## 3、给镜像打tag
 
-![img](https://longlizl.github.io\docker\images\19.png)
+![img](https://longlizl.github.io\docker\images\20.png)
 
 ```
 docker tag goharbor/nginx-photon:v2.1.0 192.168.205.178/test/nginx:latest
 ```
 
-![img](https://longlizl.github.io\docker\images\20.png)
+![img](https://longlizl.github.io\docker\images\21.png)
 
 ## 4、push到仓库
 
@@ -138,9 +138,9 @@ docker tag goharbor/nginx-photon:v2.1.0 192.168.205.178/test/nginx:latest
 docker push 192.168.205.178/test/nginx:latest
 ```
 
-![img](https://longlizl.github.io\docker\images\21.png)
+![img](https://longlizl.github.io\docker\images\22.png)
 
 **登录查看test项目下镜像**
 
-![image-20210907094036720](https://longlizl.github.io\docker\images\22.png)
+![image-20210907094036720](https://longlizl.github.io\docker\images\23.png)
 
