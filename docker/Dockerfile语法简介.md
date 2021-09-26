@@ -200,7 +200,7 @@ ENV <key> <value> ENV <key>=<value> ...
 指定一个环境变量，会被后续RUN指令使用，并在容器运行时保留。
 
 ENV设置的环境变量，可以使用 docker inspect 命令来查看。同时还可以使用 docker run --env <key>=<value>来修改环境变量
-```
+```shell
 
  
 
