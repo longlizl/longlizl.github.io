@@ -182,8 +182,9 @@ EXPOSE <port> [<port>...]
 
 告诉Docker服务端容器对外映射的本地端口，需要在docker run 的时候使用-p 或者 -P 选项生效。
 
+# 此端口只是申明容器里应用端口为80，如果你容器应用端口为8080 使用-p 80:80是无法访问的
 EXPOSE 80/tcp
-```
+```SHELL
 
  
 
@@ -288,7 +289,9 @@ RUN yum -y install gcc* make pcre-devel zlib-devel
 ADD nginx-1.6.0.tar.gz /usr/src/ WORKDIR /usr/src/nginx-1.6.0/ 
 RUN useradd -s /sbin/nologin -M nginx 
 RUN ./configure --prefix=/usr/local/nginx --user=nginx --group=nginx --with-http_stub_status_module && make && make install 
-RUN ln -s /usr/local/nginx/sbin/* /usr/local/sbin/ EXPOSE 80 WORKDIR / 
+RUN ln -s /usr/local/nginx/sbin/* /usr/local/sbin/ 
+EXPOSE 80 
+WORKDIR / 
 RUN nginx CMD ["nginx", "-g", "daemon off;"]
 
 3.执行dockerfile文件
