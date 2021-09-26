@@ -184,13 +184,11 @@ EXPOSE <port> [<port>...]
 
 # 此端口只是申明容器里应用端口为80，如果你容器应用端口为8080 使用-p 80:80是无法访问的
 EXPOSE 80/tcp
-```shell
 
  
 
 ## 11. ENV
 
-```shell
 ENV指令可以用于docker容器设置环境变量
 
 Syntax:
@@ -200,13 +198,11 @@ ENV <key> <value> ENV <key>=<value> ...
 指定一个环境变量，会被后续RUN指令使用，并在容器运行时保留。
 
 ENV设置的环境变量，可以使用 docker inspect 命令来查看。同时还可以使用 docker run --env <key>=<value>来修改环境变量
-```shell
 
  
 
 ## 12. USER
 
-```shell
 用于指定运行image时的或运行Dockerfile中任何RUN、CMD或ENTRYPOINT指令指定的程序时的用户名或UID
 
 默认情况下，container的运行身份为root用户
