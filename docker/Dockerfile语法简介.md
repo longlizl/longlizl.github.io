@@ -280,15 +280,17 @@ nginx-1.6.0.tar.gz
 
 vim  /root/nginx/Dockerfile
 
-FROM centos MAINTAINER li 
+FROM centos 
+MAINTAINER li 
 RUN yum -y install gcc* make pcre-devel zlib-devel 
-ADD nginx-1.6.0.tar.gz /usr/src/ WORKDIR /usr/src/nginx-1.6.0/ 
+ADD nginx-1.6.0.tar.gz /usr/src/ 
+WORKDIR /usr/src/nginx-1.6.0/ 
 RUN useradd -s /sbin/nologin -M nginx 
-RUN ./configure --prefix=/usr/local/nginx --user=nginx --group=nginx --with-http_stub_status_module && make && make install 
+RUN ./configure --prefix=/usr/local/nginx --user=nginx --group=nginx --with-http_ssl_module --with-http_stub_status_module && make && make install 
 RUN ln -s /usr/local/nginx/sbin/* /usr/local/sbin/ 
 EXPOSE 80 
 WORKDIR / 
-RUN nginx CMD ["nginx", "-g", "daemon off;"]
+CMD ["nginx", "-g", "daemon off;"]
 
 3.执行dockerfile文件
 
