@@ -394,8 +394,8 @@ Commercial support is available at
    ADD demo-0.0.1-SNAPSHOT.jar /opt/demo/
    WORKDIR /opt/demo/
    VOLUME  ["/opt/demo"]
-   ENTRYPOINT ["java","-jar"]
    EXPOSE 8081
+   ENTRYPOINT ["java","-jar"]
    CMD ["demo-0.0.1-SNAPSHOT.jar"]
    ```
 
