@@ -2,8 +2,6 @@
 
 ```
 Dockerfile是由一系列命令和参数构成的脚本，一个Dockerfile里面包含了构建整个image的完整命令。Docker通过docker build执行Dockerfile中的一系列命令自动构建image。
-
-# :代表注释
 ```
 
 ## 1. FROM
@@ -17,8 +15,6 @@ FROM <image>[:<tag> | @<digest>] [AS <name>]
 - FROM可以在一个Dockerfile中出现多次，以便于创建混合的images。如果没有指定tag,latest将会被指定为要使用的基础镜像版本。
 - AS name,可以给新的构建阶段赋予名称。该名称可用于后续FROM 和 COPY --from=<name | index>说明可以引用此阶段中构建的镜像
 ```
-
- 
 
 ## 2. LABEL
 
@@ -60,7 +56,6 @@ COPY data /data/
 - 如果<dest>事先不存在，它将会被自动创建，这包括其父目录路径。
 ```
 
- 
 
 ## 5. ADD
 
@@ -165,10 +160,15 @@ CMD会在启动容器的时候执行，build时不执行，而RUN只是在构建
 Syntax：
 
 ENTRYPOINT <command> //这种方式能接受shell命令行展开 
-ENTRYPOINT ["<executable>","param1"] //展开不了，但能接收到信号
+ENTRYPOINT ["<executable>","param1"] 
 
 docker run命令传入的命令参数会覆盖CMD指令的内容并且附加到ENTRYPOINT命令最后做为其参数使用。Dockerfile文件中也可以存在多个ENTRYPOINT指令，但仅有最后一个会生效
- 
+
+# 通常我们结合CMD一起使用：
+ex：
+我们如果允许jar包时命令格式：java -jar 123.jar我们可以这样写
+ENTRYPOINT ["java","-jar"] # 这个是固定不变的参数
+CMD ["123.jar"] # 这个是可变的参数，可以在使用docker run 命令后接上任意xxx.jar来覆盖CMD参数
 ```
 
 ## 10. EXPOSE
@@ -182,27 +182,32 @@ EXPOSE <port> [<port>...]
 
 告诉Docker服务端容器对外映射的本地端口，需要在docker run 的时候使用-p 或者 -P 选项生效。
 
-# 此端口只是申明容器里应用端口为80，如果你容器应用端口为8080 使用-p 80:80是无法访问的
-EXPOSE 80/tcp
+EXPOSE 80/tcp # 此端口只是申明容器里应用端口为80，如果你容器应用端口为8080 使用-p 80:80是无法访问的 
+```
 
  
 
 ## 11. ENV
 
+```shell
 ENV指令可以用于docker容器设置环境变量
 
 Syntax:
 
-ENV <key> <value> ENV <key>=<value> ...
+ENV <key> <value> 
+ENV <key>=<value> ...
 
 指定一个环境变量，会被后续RUN指令使用，并在容器运行时保留。
 
-ENV设置的环境变量，可以使用 docker inspect 命令来查看。同时还可以使用 docker run --env <key>=<value>来修改环境变量
+ENV设置的环境变量，可以使用 docker inspect 命令来查看。同时还可以使用 
+docker run --env <key>=<value>来修改环境变量
+```
 
  
 
 ## 12. USER
 
+```shell
 用于指定运行image时的或运行Dockerfile中任何RUN、CMD或ENTRYPOINT指令指定的程序时的用户名或UID
 
 默认情况下，container的运行身份为root用户
@@ -267,37 +272,117 @@ HEALTHCHECK --interval=5s --timeout=3s \
 CMD curl -fs http://127.0.0.1/ || exit 1
 ```
 
-## nginx镜像构建例子：
+# nginx镜像构建实列：
+
+1. 下载源代码软件包
 
 ```shell
-1.下载源代码软件包
+mkdir /root/nginx && cd /root/nginx
+wget http://nginx.org/download/nginx-1.21.3.tar.gz
+nginx-1.21.3.tar.gz 
+```
 
-mkdir /root/nginx_demo/
+2. 编辑dockerfile文件
 
-nginx-1.6.0.tar.gz 
-
-2.编辑dockerfile文件
-
+```shell
 vim  /root/nginx/Dockerfile
 
-FROM centos 
-MAINTAINER li 
-RUN yum -y install gcc* make pcre-devel zlib-devel 
-ADD nginx-1.6.0.tar.gz /usr/src/ 
-WORKDIR /usr/src/nginx-1.6.0/ 
-RUN useradd -s /sbin/nologin -M nginx 
-RUN ./configure --prefix=/usr/local/nginx --user=nginx --group=nginx --with-http_ssl_module --with-http_stub_status_module && make && make install 
-RUN ln -s /usr/local/nginx/sbin/* /usr/local/sbin/ 
-EXPOSE 80 
-WORKDIR / 
-CMD ["nginx", "-g", "daemon off;"]
-
-3.执行dockerfile文件
-
-docker build -t centos-nginx:test ./
-
-4.创建nginx的容器,并做端口映射
-
-docker run -d --name nginx1 -p 80:80 9b9494bee7cc
+# 以centos7为基础镜像
+FROM centos:7
+# 安装所需要的编译环境
+RUN yum -y install gcc* make pcre-devel zlib-devel
+ADD nginx-1.21.3.tar.gz /usr/src/
+WORKDIR /usr/src/nginx-1.21.3
+RUN useradd -s /sbin/nologin -M nginx
+RUN ./configure --prefix=/opt/nginx --user=nginx --group=nginx --with-http_stub_status_module && make && make install
+# 申明容器端口，并不是暴露端口方便维护人员清楚暴露出哪些端口
+EXPOSE 80
+# 设置可挂载目录
+VOLUME  ["/opt/nginx/html","/opt/nginx/conf"]
+# 设置nginx环境变量
+ENV PATH=/opt/nginx/sbin:$PATH
+# 固定参数
+ENTRYPOINT ["nginx"]
+# 可变参数
+CMD ["-g", "daemon off;"]
 ```
+
+3. 构建镜像
+
+```shell
+[root@cs nginx]# docker build -t nginx_test ./
+[root@cs nginx]# docker images
+REPOSITORY   TAG       IMAGE ID       CREATED          SIZE
+nginx_test   v1        42d986241857   17 minutes ago   603MB
+<none>       <none>    8dace6ce6e71   59 minutes ago   580MB
+tomcat       vv6       8d1d0c5d815a   9 days ago       680MB
+centos       7         eeb6ee3f44bd   11 days ago      204MB
+tomcat       latest    bb832de23021   12 days ago      680MB
+nginx        latest    ad4c705f24d3   2 weeks ago      133MB
+```
+
+4. 启动容器并做数据持久化
+
+```nginx
+[root@cs nginx]# docker run -d -p 80:80 -v nginxconf:/opt/nginx/conf  -v nginxhtml:/opt/nginx/html --name mynginx nginx_test:v1
+72725db1a8eac4cdc8d6240b445efbd98296a48d9c04e94066c73ec4ae2003a7
+[root@cs nginx]# docker ps
+CONTAINER ID   IMAGE           COMMAND                  CREATED          STATUS          PORTS                                       NAMES
+72725db1a8ea   nginx_test:v1   "nginx -g 'daemon of…"   11 seconds ago   Up 10 seconds   0.0.0.0:80->80/tcp, :::80->80/tcp           mynginx
+38d3337b2a91   tomcat          "catalina.sh run"        3 hours ago      Up 3 hours      0.0.0.0:8081->8080/tcp, :::8081->8080/tcp   tomcat-test
+a3c04c98efa2   tomcat          "catalina.sh run"        9 days ago       Up 9 days       0.0.0.0:8080->8080/tcp, :::8080->8080/tcp   tomcat_web
+```
+
+4. 查看卷及挂载信息
+
+```nginx
+[root@cs nginx]# docker volume ls
+DRIVER    VOLUME NAME
+local     7972667c46e64531c4f96803455b2bbc675d4e8b1fa12c2145c2f9d0389d5ea6
+local     nginxconf
+local     nginxhtml
+[root@cs nginx]# docker inspect nginxconf | grep Mountpoint
+        "Mountpoint": "/var/lib/docker/volumes/nginxconf/_data",
+[root@cs nginx]# cd /var/lib/docker/volumes/nginxconf/_data
+[root@cs _data]# ls
+fastcgi.conf          fastcgi_params          koi-utf  mime.types          nginx.conf          scgi_params          uwsgi_params          win-utf
+fastcgi.conf.default  fastcgi_params.default  koi-win  mime.types.default  nginx.conf.default  scgi_params.default  uwsgi_params.default
+
+[root@cs _data]# docker inspect nginxhtml | grep Mountpoint
+        "Mountpoint": "/var/lib/docker/volumes/nginxhtml/_data",
+[root@cs _data]# cd /var/lib/docker/volumes/nginxhtml/_data
+[root@cs _data]# ls
+50x.html  index.html
+```
+
+6. 访问测试
+
+```html
+[root@cs _data]# curl 127.0.0.1 
+<!DOCTYPE html>
+<html>
+<head>
+<title>Welcome to nginx!</title>
+<style>
+html { color-scheme: light dark; }
+body { width: 35em; margin: 0 auto;
+font-family: Tahoma, Verdana, Arial, sans-serif; }
+</style>
+</head>
+<body>
+<h1>Welcome to nginx!</h1>
+<p>If you see this page, the nginx web server is successfully installed and
+working. Further configuration is required.</p>
+
+<p>For online documentation and support please refer to
+<a href="http://nginx.org/">nginx.org</a>.<br/>
+Commercial support is available at
+<a href="http://nginx.com/">nginx.com</a>.</p>
+
+<p><em>Thank you for using nginx.</em></p>
+</body>
+</html>
+```
+
+
 
