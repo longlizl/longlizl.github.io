@@ -384,5 +384,55 @@ Commercial support is available at
 </html>
 ```
 
+#  springboot构建实列：
+
+1. Dockerfile文件编写
+
+   ```shell
+   # 基于jdk8基础镜像
+   FROM openjdk:8-jre
+   ADD demo-0.0.1-SNAPSHOT.jar /opt/demo/
+   WORKDIR /opt/demo/
+   VOLUME  ["/opt/demo"]
+   ENTRYPOINT ["java","-jar"]
+   EXPOSE 8081
+   CMD ["demo-0.0.1-SNAPSHOT.jar"]
+   ```
+
+   
+
+2. 镜像构建
+
+   ```shell
+   [root@cs springboot]# docker run -d -p 9999:8081 -v spring:/opt/demo --name test-springboot springboot:v1
+   b0487becf974c1577a1539e13623a2ccc5c2e586e3b99e2a7c8c9aa864629f45
+   [root@cs springboot]# docker ps 
+   CONTAINER ID   IMAGE           COMMAND                  CREATED          STATUS          PORTS                                       NAMES
+   b0487becf974   springboot:v1   "java -jar demo-0.0.…"   11 seconds ago   Up 10 seconds   0.0.0.0:9999->8081/tcp, :::9999->8081/tcp   test-springboot
+   72725db1a8ea   nginx_test:v1   "nginx -g 'daemon of…"   3 hours ago      Up 3 hours      0.0.0.0:80->80/tcp, :::80->80/tcp           mynginx
+   38d3337b2a91   tomcat          "catalina.sh run"        6 hours ago      Up 6 hours      0.0.0.0:8081->8080/tcp, :::8081->8080/tcp   tomcat-test
+   a3c04c98efa2   tomcat          "catalina.sh run"        9 days ago       Up 9 days       0.0.0.0:8080->8080/tcp, :::8080->8080/tcp   tomcat_web
+   ```
+
+   
+
+3.  持久化目录
+
+   ```shell
+   [root@cs springboot]# docker inspect spring | grep Mountpoint
+           "Mountpoint": "/var/lib/docker/volumes/spring/_dat
+   ```
+
+   
+
+4.  访问项目
+
+   ```shell
+   [root@cs springboot]# curl 192.168.205.106:9999 
+   Hello world!
+   ```
+
+   
+
 
 
