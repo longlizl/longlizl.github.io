@@ -18,9 +18,19 @@ docker run -d -p 8080:8080 --name tomcat-test -v /opt/apps:/usr/local/tomcat/web
 ```shell
 [root@cs ~]# docker inspect -f '{{(index .Mounts 0).Source}}' tomcat-test
 /opt/apps
+或：
+docker inspect -f '{{range .Mounts}}{{.Source}} {{end}}' tomcat-test
+/opt/apps
 ```
 
 ![image-20210918105724800](https://longlizl.github.io\docker\images\5.png)
+
+容器ip可以使用下面命令查看
+
+```shell
+[root@cs ~]# docker inspect -f '{{.NetworkSettings.Networks.bridge.IPAddress}}' tomcat-test
+172.17.0.3
+```
 
 在/opt/apps下新建个ROOT根目录再新建个index.html文件测试
 
