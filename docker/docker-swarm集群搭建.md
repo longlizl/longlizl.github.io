@@ -132,7 +132,8 @@ docker stack deploy -c docker-compose.yml nginx-demo
 
 ```shell
 $ docker service create \
-    --mount 'type=volume,src=nginxhtml,dst=/usr/share/nginx/html,volume-driver=local,volume-opt=type=nfs,volume-opt=device=192.168.205.135:/opt/nfs_share,"volume-opt=o=addr=192.168.205.135,vers=4,soft,timeo=180,bg,tcp,rw"'
+	-p 80:80 \
+    --mount 'type=volume,src=nginxhtml,dst=/usr/share/nginx/html,volume-nocopy=true,volume-driver=local,volume-opt=type=nfs,volume-opt=device=192.168.205.135:/opt/nfs_share,"volume-opt=o=addr=192.168.205.135,vers=4,soft,timeo=180,bg,tcp,rw"'
     --name nginx-demo \
     nginx:latest
 ```
