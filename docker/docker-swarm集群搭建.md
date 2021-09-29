@@ -91,8 +91,166 @@ docker service update –replicas 3 nginx
 docker-compose.yml 为提前编排好的配置文件
 
 ```shell
+# 格式：docker stack deploy -c <docker-compose.yml> <service_name>
 docker stack deploy -c docker-compose.yml nginx-demo
 ```
+## 六.Swarm持久化共享存储
+
+1. 选择一台主机安装NFS服务
+
+   yum -y install nfs-utils  rpcbind
+
+   mkdir /opt/nfs_share
+
+   vim /etc/exports
+   
+   ```shell
+   /opt/nfs_share 192.168.205.0/24(rw,no_root_squash,sync) 
+   ```
+
+   systemctl start rpcbind
+
+   systemctl start nfs
+   
+   systemctl enable nfs
+   
+2. swarm所有节点安装nfs-utils
+
+   ```shell
+   yum -y install nfs-utils
+   systemctl start nfs
+   systemctl enable nfs
+   ```
+
+   
+
+3. 持久化创建服务
+
+   3.1  命令行创建（参考的官网命令）
+   
+   [docker-sewram-volume](https://docs.docker.com/storage/volumes/)
+
+```shell
+$ docker service create \
+    --mount 'type=volume,src=nginxhtml,dst=/usr/share/nginx/html,volume-driver=local,volume-opt=type=nfs,volume-opt=device=192.168.205.135:/opt/nfs_share,"volume-opt=o=addr=192.168.205.135,vers=4,soft,timeo=180,bg,tcp,rw"'
+    --name nginx-demo \
+    nginx:latest
+```
+
+​      3.2   docker-compose.yml文件编排
+
+```shell
+version: '3.8'
+services:
+  nginx:
+    image: nginx:latest
+    deploy:
+      mode: replicated
+      replicas: 3
+      restart_policy:
+        condition: on-failure
+    ports:
+      - "88:80"
+    networks:
+      ng_vol:
+    volumes:
+      - "nginxhtml:/usr/share/nginx/html"
+
+volumes:
+  nginxhtml:
+    driver: local
+    driver_opts:
+      type: "nfs"
+      o: "addr=192.168.205.135,rw"
+      device: ":/opt/nfs_share"
+
+networks:
+  ng_vol:
+    driver: overlay
+```
+
+部署服务
+
+```
+docker stack deploy -c docker-compose.yml  nginx-demo
+```
+
+查看服务运行的节点分布
+
+```shell
+[root@swarm-master _data]# docker service ls | grep nginx-demo | awk '{print $1}' | xargs docker service ps | grep -i running
+kkecr966hg1d   nginx-demo_nginx.1       nginx:latest   swarm-master   Running         Running 16 minutes ago                                       
+gli71ut5nru1   nginx-demo_nginx.2       nginx:latest   swarm-master   Running         Running 15 minutes ago                                       
+ldd5r3csu7lp   nginx-demo_nginx.3       nginx:latest   swarm-node1    Running         Running 16 minutes ago
+```
+
+查看NFS共享目录及挂载卷是否
+
+```shell
+# NFS共享目录
+[root@swarm-master nfs_share]# ls
+123  50x.html  index.html
+# work节点挂载卷目录（由于服务运行节点有2个都被分配到主节点上所以node2节点暂时没数据）
+[root@swarm-node1 _data]# ls
+123  50x.html  index.html
+# 现在我们把运行容器任务更新到6个看看
+[root@swarm-master _data]# docker service update --replicas 6 nginx-demo_nginx
+nginx-demo_nginx
+overall progress: 6 out of 6 tasks 
+1/6: running   [==================================================>] 
+2/6: running   [==================================================>] 
+3/6: running   [==================================================>] 
+4/6: running   [==================================================>] 
+5/6: running   [==================================================>] 
+6/6: running   [==================================================>] 
+verify: Service converged 
+[root@swarm-master _data]# docker service ls
+ID             NAME               MODE         REPLICAS   IMAGE          PORTS
+r7iem955bk5y   nginx              replicated   3/3        nginx:latest   *:9999->80/tcp
+wcbf9dpwxwki   nginx-demo_nginx   replicated   6/6        nginx:latest   *:88->80/tcp
+[root@swarm-master _data]# docker service ls | grep nginx-demo | awk '{print $1}' | xargs docker service ps | grep -i running
+kkecr966hg1d   nginx-demo_nginx.1       nginx:latest   swarm-master   Running         Running 50 minutes ago                                          
+gli71ut5nru1   nginx-demo_nginx.2       nginx:latest   swarm-master   Running         Running 49 minutes ago                                          
+ldd5r3csu7lp   nginx-demo_nginx.3       nginx:latest   swarm-node1    Running         Running 50 minutes ago                                          
+fu90vw0u1l0t   nginx-demo_nginx.4       nginx:latest   swarm-node1    Running         Running 8 minutes ago                                           
+3vguvr71lsch   nginx-demo_nginx.5       nginx:latest   swarm-node2    Running         Running about a minute ago                                      
+cphhmb1dr44z   nginx-demo_nginx.6       nginx:latest   swarm-node2    Running         Running about a minute ago  # 可以看到每个节点都有2个容器在运行了，在看下挂载卷已经有数据了 
+[root@swarm-node2 _data]# ls
+123  50x.html  index.html
+```
+
+测试访问下 看：
+
+```html
+[root@swarm-node2 _data]# curl http://192.168.205.137:88
+
+<!DOCTYPE html>
+<html>
+<head>
+<title>Welcome to nginx!</title>
+<style>
+html { color-scheme: light dark; }
+body { width: 35em; margin: 0 auto;
+font-family: Tahoma, Verdana, Arial, sans-serif; }
+</style>
+</head>
+<body>
+<h1>Welcome to nginx!</h1>
+<p>If you see this page, the nginx web server is successfully installed and
+working. Further configuration is required.</p>
+
+
+<p>For online documentation and support please refer to
+<a href="http://nginx.org/">nginx.org</a>.<br/>
+Commercial support is available at
+<a href="http://nginx.com/">nginx.com</a>.</p>
+
+<p><em>Thank you for using nginx.</em></p>
+
+</body>
+</html>
+```
+
 
 ## Swarm相关命令
 
