@@ -44,6 +44,7 @@
 * python
   * [python表格数据可视化展示](python\python表格数据可视化展示.md)
   * [向excel表中某列随机插入数据](python\python向excel中某列插入随机数据.md)
+  * [python处理服务器日志数据](python\python根据条件从服务器日志筛选出需要的数据.md)
 * 代理服务
   * [kali动态代理](代理服务\kali配置动态代理.md)
   
