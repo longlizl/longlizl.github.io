@@ -1,0 +1,79 @@
+<!-- 工作笔记/_sidebar.md --> 
+
+* [Home](/) 
+* clickhouse
+  * [clickhouse高可用分布式集群](clickhouse\clickhouse高可用分布式集群.md)
+  * [clickhouse常见问题排查](clickhouse\clickhouse常见问题排查.md)
+  * [clickhouse集群监控](clickhouse\clickhouse服务监控.md)
+* mycat
+  * [mycat高可用读写分离水平分表](mycat高可用读写分离水平分表\keeplived+mycat+mysql高可用读写分离水平分表.md)
+* ELK日志系统
+  * [ELK日志系统搭建](ELK相关\ELK日志系统搭建.md)
+* Hadoop
+  * [Hadoop高可用完全分布式集群](hadoop相关\Hadoop高可用完全分布式集群.md)
+* kali渗透
+  * 端口探测扫描
+    * [nc用法](kali相关\端口探测扫描\nc传输文件端口扫描硬盘克隆.md)
+    * [nmap用法](kali相关\端口探测扫描\nmap扫描工具.md)
+  * 简单dos攻击
+    * [hping3简单SYN洪水攻击](kali相关\简单dos攻击\hping3简单SYN洪水攻击.md)
+  * 木马制作
+    * [msfvenom生成后门木马](kali相关\木马制作\msfvenom生成后门木马文件.md)
+    * [weevely生成图片木马](kali相关\木马制作\weevely生成图片木马.md)
+  * 永恒之蓝漏洞
+    * [永恒之蓝](kali相关\永恒之蓝漏洞\kali利用永恒之蓝漏洞入侵win7系统.md)
+  * arp欺骗
+    * [使用arpspoof进行arp欺骗](kali相关\arp欺骗\使用arpspoof进行arp欺骗.md)
+* nginx
+  * [Nginx实现负载均衡的几种方式](nginx相关\Nginx实现负载均衡的几种方式.md)
+  * [nginx常用内置变量](nginx相关\nginx常用内置变量.md)
+  * [nginx代理微信小程序验证文件](nginx相关\nginx代理验证微信小程序验证文件.md)
+  * [nginx代理vue项目刷新页面404的问题](nginx相关\nginx代理vue项目刷新页面404的问题.md)
+  * [nginx配置ssl证书](nginx相关\nginx配置ssl证书.md)
+  * [nginx+waf](nginx相关\nginx+waf防火墙.md)
+* docker
+  * [Dockerfile语法简介](docker\Dockerfile语法简介.md)
+  * [docker-compose简单案例语法](docker\docker-compose简单配置语法.md)
+  * [数据卷volumes](docker\docker数据卷.md)
+  * [镜像save与load用法](docker\dcoker容器镜像save与load.md)
+  * [docker-swarm](docker\docker-swarm集群搭建.md)
+  * [Harbor仓库搭建](docker\Harbor仓库搭建.md)
+  * [ssr代理](docker\docker部署ss代理脚本.md)
+* flink
+  * [shell简单监控flink任务故障告警](flink相关\使用shell监控任务故障邮件告警.md)
+* python
+  * [python表格数据可视化展示](python\python表格数据可视化展示.md)
+  * [向excel表中某列随机插入数据](python\python向excel中某列插入随机数据.md)
+  * [python处理服务器日志数据](python\python根据条件从服务器日志筛选出需要的数据.md)
+* 代理服务
+  * [kali动态代理](代理服务\kali配置动态代理.md)
+  
+  * [sockks5代理](代理服务\Linux搭建Socks5代理服务器.md)
+  
+  * [linux全局代理](代理服务\linux配置全局代理.md)
+* gitlab
+  * [gitlab安装](gitlab\gitlab安装部署.md)
+* mysql
+  * MHA
+    * [MHA高可用架构](mysql相关\MHA\MHA高可用架构.md)
+  * mysql备份还原
+    * [云数据库xb格式逻辑备份文件导入数据库](mysql相关\mysql备份还原\云数据库xb格式逻辑备份文件导入数据库.md)
+    * [innobackupex数据库备份工具](mysql相关\mysql备份还原\innobackupex数据库备份工具安装使用.md)
+    * [mysqldump备份和恢复](mysql相关\mysql备份还原\mysqldump备份和恢复.md)
+  * shell操作mysql
+    * [shell将nginx访问日志统计到mysql](mysql相关\shell脚本操作mysql\Shell脚本连接创建数据库.md)
+    * [shell连接mysql](mysql相关\shell脚本操作mysql\shell脚本连接mysql.md)
+  * [mysql联合索引](mysql相关\联合唯一索引.md)
+  * [查看锁,事务,进程](mysql相关\查看锁表_等待锁_事务_进程_批量结束进程.md)
+  * [慢查询检测与记录](mysql相关\慢查询检测与记录.md)
+  * [mysql忘记密码解决办法](mysql相关\MySql忘记密码解决办法.md)
+  * [mysql创建,更改,删除,授权](mysql相关\mysql创建_更改_删除_授权.md)
+  * [mysqldump备份和恢复](mysql相关\mysqldump备份和恢复.md)
+  * [mysql时间字段求和转换](mysql相关\mysql时间字段求和转换.md)
+  * [mysql导入数据超级权限问题](mysql相关\mysql转移数据库出现超级权限限制问题.md)
+  * [shell脚本基本mysql操作](mysql相关\Shell脚本连接创建数据库.md)
+* [sort,sed,uniq,split常用命令](sort_sed_uniq_split使用\sort_sed_uniq_split.md)
+* [tcpdump抓包工具](tcpdump抓包工具\linux使用tcpdump抓包工具抓取网络数据包.md)
+* [swap](swap\开启CentOS7下面的swap分区.md)
+* 
+
