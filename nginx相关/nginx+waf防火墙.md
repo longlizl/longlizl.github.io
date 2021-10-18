@@ -88,7 +88,7 @@ chown -R nginx:nginx waf/
 ## 7.nginx配置如下
 
 ```nginx
-# httpm
+# # http模块中加入以下配置
 lua_package_path "/opt/nginx/conf/waf/?.lua";
 lua_shared_dict limit 10m;
 init_by_lua_file  /opt/nginx/conf/waf/init.lua;
