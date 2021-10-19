@@ -4,7 +4,7 @@
 
 - etcd 
 
-用于持久化存储集群中所有的资源对象，如Node、Service、Pod、RC、Namespace等；API Server提供了操作etcd的封装接口API，这些API基本上都是集群中资源对象的增删改查及监听资源变化的接口。
+用于保存集群所有的网络配置和对象的状态信息
 
 - API Server 
 
