@@ -81,5 +81,7 @@ no label, UUID=e7d93441-2606-4cd0-a5bd-c983f579d6cb
 
 ```shell
 chmod 0600 swap-file
+
 swapon /swap-file
 ```
+
