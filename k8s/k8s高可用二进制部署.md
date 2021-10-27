@@ -66,8 +66,8 @@ Kubernetes API，集群的统一入口，各组件协调者，以RESTful API提�
    | k8s-master-02 | 192.168.205.151                         | kube-apiserver，kube-controller-manager，kube-scheduler，etcd |
    | k8s-node-03   | 192.168.205.152                         | kubelet，kube-proxy，docker etcd                             |
    | k8s-node-04   | 192.168.205.154                         | kubelet，kube-proxy，docker                                  |
-   | 负载均衡      | 192.168.205.155 ，192.168.205.157 (VIP) | Nginx,keeplived                                              |
-   | 负载均衡      | 192.168.205.156                         | Nginx,keeplived                                              |
+   | SLB           | 192.168.205.155 ，192.168.205.157 (VIP) | Nginx,keeplived                                              |
+   | SLB           | 192.168.205.156                         | Nginx,keeplived                                              |
 
 2. 系统环境配置
 
