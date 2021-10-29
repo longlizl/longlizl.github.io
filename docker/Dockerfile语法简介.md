@@ -399,11 +399,10 @@ Commercial support is available at
    CMD ["demo-0.0.1-SNAPSHOT.jar"]
    ```
 
-   
-
 2. 镜像构建
 
    ```shell
+   docker build -t springboot:v1 ./
    [root@cs springboot]# docker run -d -p 9999:8081 -v spring:/opt/demo --name test-springboot springboot:v1
    b0487becf974c1577a1539e13623a2ccc5c2e586e3b99e2a7c8c9aa864629f45
    [root@cs springboot]# docker ps 
