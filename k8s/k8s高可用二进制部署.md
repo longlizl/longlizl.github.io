@@ -152,7 +152,7 @@ Kubernetes API，集群的统一入口，各组件协调者，以RESTful API提�
    {
        "signing": {
            "default": {
-               "expiry": "876000h"
+               "expiry": "87600h"
            },
            "profiles": {
                "www": {
