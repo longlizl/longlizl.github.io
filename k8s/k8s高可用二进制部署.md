@@ -1509,9 +1509,471 @@ etcd-2               Healthy   {"health":"true"}
     
     ```
 
-### 四 . 部署SLB负载均衡
+### 四. ingress应用
 
----待续---
+​	    下面以2个服务为例进行相关配置，创建一个nginx和tomcat服务
+
+![image-20211015144121549](https://longlizl.github.io/k8s/images/8.png)
+
+1. ingress环境安装
+
+   下载ingress-nginx
+
+   ```shell
+   [root@k8s-kubernetes-master ~]# mkdir nginx-ingress-controller
+   [root@k8s-kubernetes-master ~]# cd nginx-ingress-controller/
+   [root@k8s-kubernetes-master ~]# curl -O https://raw.githubusercontent.com/kubernetes/ingress-nginx/nginx-0.30.0/deploy/static/mandatory.yaml
+   [root@k8s-kubernetes-master ~]# curl -O https://raw.githubusercontent.com/kubernetes/ingress-nginx/nginx-0.30.0/deploy/static/provider/baremetal/service-nodeport.yaml
+   
+   # 修改文件mandatory.yaml中镜像为国内站点
+   image: registry.cn-hangzhou.aliyuncs.com/google_containers/nginx-ingress-controller:0.30.0
+   kubectl apply -f mandatory.yaml 
+   kubectl apply -f service-nodeport.yaml
+   
+   # 查看pods及svc信息
+   [root@k8s-master-01 nginx-ingress-controller]# kubectl get pods,svc -o wide -n ingress-nginx
+   NAME                                           READY   STATUS    RESTARTS   AGE     IP            NODE            NOMINATED NODE   READINESS GATES
+   pod/nginx-ingress-controller-5994c9595-hfsrh   1/1     Running   0          5m57s   172.16.95.1   k8s-master-02   <none>           <none>
+   
+   NAME                    TYPE       CLUSTER-IP   EXTERNAL-IP   PORT(S)                      AGE   SELECTOR
+   service/ingress-nginx   NodePort   10.0.0.209   <none>        80:32149/TCP,443:31220/TCP   83s   app.kubernetes.io/name=ingress-nginx,app.kubernetes.io/part-of=ingress-nginx
+   ```
+
+   创建一个名称空间pro-dev
+
+   ```shell
+   kubectl create namespace pro-dev
+   ```
+
+   创建pod,service配置文件
+
+   vim nginx-tomcat.yaml
+
+   ```yaml
+   apiVersion: apps/v1
+   kind: Deployment
+   metadata:
+     name: nginx-deployment
+     namespace: pro-dev
+   spec:
+     replicas: 2
+     selector:
+       matchLabels:
+         app: nginx-pod
+     template:
+       metadata:
+         labels:
+           app: nginx-pod
+       spec:
+         containers:
+         - name: nginx
+           image: nginx
+           ports:
+           - containerPort: 80
+   ---
+   
+   apiVersion: apps/v1
+   kind: Deployment
+   metadata:
+     name: tomcat-deployment
+     namespace: pro-dev
+   spec:
+     replicas: 2
+     selector:
+       matchLabels:
+         app: tomcat-pod
+     template:
+       metadata:
+         labels:
+           app: tomcat-pod
+       spec:
+         containers:
+         - name: tomcat
+           image: tomcat:8.5-jre10-slim
+           ports:
+           - containerPort: 8080
+   ---
+   
+   apiVersion: v1
+   kind: Service
+   metadata:
+     name: nginx-service
+     namespace: pro-dev
+   spec:
+     selector:
+       app: nginx-pod
+     type: ClusterIP
+     ports:
+     - port: 80
+       targetPort: 80
+   
+   ---
+   
+   apiVersion: v1
+   kind: Service
+   metadata:
+     name: tomcat-service
+     namespace: pro-dev
+   spec:
+     selector:
+       app: tomcat-pod
+     type: ClusterIP
+     ports:
+     - port: 8080
+       targetPort: 8080
+   
+   ```
+
+2. http代理
+
+   vim ingress-http.yaml
+
+   ```yaml
+   apiVersion: extensions/v1beta1
+   kind: Ingress
+   metadata:
+     name: ingress-http
+     namespace: pro-dev
+   spec:
+     rules:
+     - host: nginx.test.com
+       http:
+         paths:
+         - path: /
+           backend:
+             serviceName: nginx-service
+             servicePort: 80
+     - host: tomcat.test.com
+       http:
+         paths:
+         - path: /
+           backend:
+             serviceName: tomcat-service
+             servicePort: 8080
+   ```
+
+   在本地做好host解析
+
+   ```shell
+   192.168.205.150 nginx.test.com
+   192.168.205.150 tomcat.test.com
+   ```
+
+   域名访问：
+
+   我们看下svc暴露的http端口
+
+   ```shell
+   [root@k8s-master-01 yaml]# kubectl get svc -n ingress-nginx -o wide
+   NAME            TYPE       CLUSTER-IP   EXTERNAL-IP   PORT(S)                      AGE   SELECTOR
+   ingress-nginx   NodePort   10.0.0.209   <none>        80:32149/TCP,443:31220/TCP   38m   app.kubernetes.io/name=ingress-nginx,app.kubernetes.io/part-of=ingress-nginx
+   ```
+
+   > nginx.test.com:32149
+   >
+   > ![image-20211028165359956](https://longlizl.github.io/k8s/images/9.png)
+
+   ---
+
+   > tomcat.test.com:32149
+   >
+   > ![image-20211028165706231](https://longlizl.github.io/k8s/images/10.png)
+
+   
+
+3. Https代理
+
+   创建证书
+
+   ```bash
+   # 生成证书
+   openssl req -x509 -sha256 -nodes -days 365000 -newkey rsa:2048 -keyout tls.key -out tls.crt -subj "/C=CN/ST=WH/L=WH/O=nginx/CN=test.com"
+   
+   # 创建密钥
+   kubectl create secret tls tls-secret --key tls.key --cert tls.crt
+   ```
+
+   创建ingress-https.yaml
+
+   ```bash
+   vim ingress-https.yaml
+   apiVersion: extensions/v1beta1
+   kind: Ingress
+   metadata:
+     name: ingress-https
+     namespace: pro-dev
+   spec:
+     tls:
+       - hosts:
+         - nginx.test.com
+         - tomcat.test.com
+         secretName: tls-secret 
+     rules:
+     - host: nginx.test.com
+       http:
+         paths:
+         - path: /
+           backend:
+             serviceName: nginx-service
+             servicePort: 80
+     - host: tomcat.test.com
+       http:
+         paths:
+         - path: /
+           backend:
+             serviceName: tomcat-service
+             servicePort: 8080
+    
+    kubectl apply -f ingress-https.yaml
+   ```
+
+访问测试
+
+> https://nginx.test.com:31220/
+
+![image-20211028174236792](https://longlizl.github.io/k8s/images/11.png)
+
+> https://tomcat.test.com:31220/
+
+![image-20211028174333073](https://longlizl.github.io/k8s/images/12.png)
+
+### 五.  部署SLB负载均衡与keepalived高可用
+
+1. 分别在SLB_01和SLB_02主机安装nginx并配置负载均衡
+
+   ```shell
+   # 下载安装nginx
+   wget http://nginx.org/download/nginx-1.20.1.tar.gz
+   tar -zxvf nginx-1.20.1.tar.gz 
+   useradd -s /sbin/nologin nginx
+   yum -y install gcc gcc-c++ make automake autoconf pcre pcre-devel zlib zlib-devel openssl openssl-devel libtool
+   cd nginx-1.20.1
+   # 编译安装
+   ./configure  \
+   --prefix=/opt/nginx \
+   --user=nginx \
+   --group=nginx \
+   --with-http_ssl_module \
+   --with-http_stub_status_module \
+   --with-http_sub_module \
+   --with-http_v2_module \
+   --with-mail_ssl_module \
+   --with-stream \
+   --with-stream_ssl_module \
+   --with-stream_ssl_preread_module 
+   make && make install
+   # 添加环境变量
+   cat >> /etc/profile << 'EOF'
+   export NGINX_HOME=/opt/nginx
+   export PATH=$NGINX_HOME/sbin:$PATH
+   EOF
+   . /etc/profile
+   # 配置负载均衡
+   在配置文件最后加上以下配置，与http模块同级
+   cd /opt/nginx/conf
+   vim nginx.conf
+   stream {
+   
+       log_format  main  '$remote_addr $upstream_addr - [$time_local] $status $upstream_bytes_sent';
+       access_log  /opt/nginx/logs/k8s-access.log  main;
+   
+       upstream apiserver {
+          server 192.168.205.150:6443;
+          server 192.168.205.151:6443;
+       }
+   
+       server {
+          listen 6443;
+          proxy_pass apiserver;
+       }
+   }
+   # 启动nginx
+   [root@slb_01]# nginx
+   [root@slb_02]# nginx
+   ```
+
+2. 分别在SLB_01和SLB_02主机安装配置keepalived
+
+   ```shell
+   # 安装keepalived
+   yum -y install keepalived
+   cp /etc/keepalived/keepalived.conf /etc/keepalived/keepalived.conf.bak
+   # 在2主机上创建检测nginx脚本文件
+   mkdir -p /etc/keepalived/scripts
+   cat > /etc/keepalived/scripts/chk_nginx.sh << 'EOF'
+   #!/bin/bash
+   PORT_COUNT=`ss -ntupl | grep 6443 | wc -l`
+   if [ $PORT_COUNT -eq 0 ];then
+       exit 1
+   else
+       exit 0
+   fi
+   EOF
+   chmod +x /etc/keepalived/scripts/chk_nginx.sh
+   # 配置keepalived
+   1. SLB_01节点配置
+   vim /etc/keepalived/keepalived.conf
+   ! Configuration File for keepalived
+   global_defs {
+      notification_email {
+        acassen@firewall.loc
+        failover@firewall.loc
+        sysadmin@firewall.loc
+      }
+      notification_email_from Alexandre.Cassen@firewall.loc
+      smtp_server 127.0.0.1
+      smtp_connect_timeout 30
+      router_id nginx_1
+      vrrp_skip_check_adv_addr
+      vrrp_garp_interval 0
+      vrrp_gna_interval 0
+   }
+   
+   vrrp_script chk_nginx {
+       script "/etc/keepalived/scripts/chk_nginx.sh"
+   }
+   
+   vrrp_instance VI_1 {
+       state MASTER
+       interface ens33
+       virtual_router_id 51
+       priority 100
+       advert_int 1
+       authentication {
+           auth_type PASS
+           auth_pass 1111
+       }
+       virtual_ipaddress {
+           192.168.205.157
+       }
+       track_script {
+           chk_nginx
+      }
+   }
+   
+   2. SLB_02节点配置
+   ! Configuration File for keepalived
+   global_defs {
+      notification_email {
+        acassen@firewall.loc
+        failover@firewall.loc
+        sysadmin@firewall.loc
+      }
+      notification_email_from Alexandre.Cassen@firewall.loc
+      smtp_server 127.0.0.1
+      smtp_connect_timeout 30
+      router_id nginx_2
+      vrrp_skip_check_adv_addr
+      vrrp_garp_interval 0
+      vrrp_gna_interval 0
+   }
+   
+   vrrp_script chk_nginx {
+       script "/etc/keepalived/scripts/chk_nginx.sh"
+   }
+   
+   vrrp_instance VI_1 {
+       state BACKUP
+       interface ens33
+       virtual_router_id 51
+       priority 90
+       advert_int 1
+       authentication {
+           auth_type PASS
+           auth_pass 1111
+       }
+       virtual_ipaddress {
+           192.168.205.157
+       }
+       track_script {
+           chk_nginx
+      }
+   }
+   
+   # 启动keepalived
+   systemctl start keepalived
+   systemctl enable keepalived
+   # 查看master节点ip,vip在此节点上
+   [root@slb_01 conf]# ip addr
+   1: lo: <LOOPBACK,UP,LOWER_UP> mtu 65536 qdisc noqueue state UNKNOWN group default qlen 1000
+       link/loopback 00:00:00:00:00:00 brd 00:00:00:00:00:00
+       inet 127.0.0.1/8 scope host lo
+          valid_lft forever preferred_lft forever
+       inet6 ::1/128 scope host 
+          valid_lft forever preferred_lft forever
+   2: ens33: <BROADCAST,MULTICAST,UP,LOWER_UP> mtu 1500 qdisc pfifo_fast state UP group default qlen 1000
+       link/ether 00:0c:29:29:0a:e6 brd ff:ff:ff:ff:ff:ff
+       inet 192.168.205.155/24 brd 192.168.205.255 scope global noprefixroute ens33
+          valid_lft forever preferred_lft forever
+       inet 192.168.205.157/32 scope global ens33
+          valid_lft forever preferred_lft forever
+       inet6 fe80::6b62:63ee:cc12:d9be/64 scope link noprefixroute 
+          valid_lft forever preferred_lft forever
+   # 关掉master点nginx服务我们查看vip飘逸情况
+   nginx -s stop
+   # 我们发现已经飘逸到backup节点上了
+   [root@slb_02 conf]# ip addr
+   1: lo: <LOOPBACK,UP,LOWER_UP> mtu 65536 qdisc noqueue state UNKNOWN group default qlen 1000
+       link/loopback 00:00:00:00:00:00 brd 00:00:00:00:00:00
+       inet 127.0.0.1/8 scope host lo
+          valid_lft forever preferred_lft forever
+       inet6 ::1/128 scope host 
+          valid_lft forever preferred_lft forever
+   2: ens33: <BROADCAST,MULTICAST,UP,LOWER_UP> mtu 1500 qdisc pfifo_fast state UP group default qlen 1000
+       link/ether 00:0c:29:cc:8a:d6 brd ff:ff:ff:ff:ff:ff
+       inet 192.168.205.156/24 brd 192.168.205.255 scope global noprefixroute ens33
+          valid_lft forever preferred_lft forever
+       inet 192.168.205.157/32 scope global ens33
+          valid_lft forever preferred_lft forever
+       inet6 fe80::6b62:63ee:cc12:d9be/64 scope link tentative noprefixroute dadfailed 
+          valid_lft forever preferred_lft forever
+       inet6 fe80::5796:a080:7156:44ee/64 scope link noprefixroute 
+          valid_lft forever preferred_lft forever
+   
+   ```
+
+3. 所有节点配置配置文件里与apiserver的连接地址改为vip的地址
+
+   ```shell
+   # 4个节点全部做同样操作
+   k8s-master-01：
+   sed -i 's/192.168.205.150:6443/192.168.205.157:6443/g' /opt/kubernetes/conf/*
+   k8s-master-02:
+   sed -i 's/192.168.205.150:6443/192.168.205.157:6443/g' /opt/kubernetes/conf/*
+   k8s-node-03:
+   sed -i 's/192.168.205.150:6443/192.168.205.157:6443/g' /opt/kubernetes/conf/*
+   k8s-node-04
+   sed -i 's/192.168.205.150:6443/192.168.205.157:6443/g' /opt/kubernetes/conf/*
+   # 重启各个节点kubelet,kube-porxy组件
+   systemctl restart kubelet
+   systemctl restart kube-proxy
+   ```
+
+4. 查看集群信息及nginx日志
+
+   ```
+   # 集群节点信息
+   [root@k8s-master-02 conf]# kubectl get nodes
+   NAME            STATUS   ROLES    AGE     VERSION
+   k8s-master-01   Ready    <none>   7d18h   v1.18.13
+   k8s-master-02   Ready    <none>   6d17h   v1.18.13
+   k8s-node-03     Ready    <none>   7d23h   v1.18.13
+   k8s-node-04     Ready    <none>   7d23h   v1.18.13
+   # 在SLB_01主机上查看日志已经实现了负载均衡
+   [root@slb_01 logs]# tail -f k8s-access.log 
+   192.168.205.151 192.168.205.150:6443 - [03/Nov/2021:11:57:40 +0800] 200 1901
+   192.168.205.154 192.168.205.151:6443 - [03/Nov/2021:11:57:54 +0800] 200 1897
+   192.168.205.150 192.168.205.150:6443 - [03/Nov/2021:11:58:05 +0800] 200 2669
+   192.168.205.152 192.168.205.151:6443 - [03/Nov/2021:11:58:18 +0800] 200 2668
+   192.168.205.152 192.168.205.150:6443 - [03/Nov/2021:11:58:18 +0800] 200 1897
+   192.168.205.154 192.168.205.151:6443 - [03/Nov/2021:11:58:54 +0800] 200 2705
+   192.168.205.151 192.168.205.150:6443 - [03/Nov/2021:12:00:07 +0800] 200 2671
+   192.168.205.150 192.168.205.151:6443 - [03/Nov/2021:12:00:45 +0800] 200 2672
+   192.168.205.152 192.168.205.150:6443 - [03/Nov/2021:12:01:05 +0800] 200 2668
+   
+   ```
+
+   
 
 
 
