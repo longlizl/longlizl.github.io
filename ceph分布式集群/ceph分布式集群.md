@@ -328,7 +328,7 @@ ceph mon stat
 
 ![img](https://longlizl.github.io/ceph分布式集群/images/27.png)
 
-## 五: ceph-dash集群监控工具部署
+## 四: ceph-dash集群监控工具部署
 
 在监控节点安装ceph-dash
 
