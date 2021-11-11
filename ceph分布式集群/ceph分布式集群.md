@@ -9,7 +9,7 @@
 | centos 7.4 | 192.168.205.191 | ceph-node-1 | ceph     | client          | Y           |
 | centos 7.4 | 192.168.205.192 | ceph-node-2 | ceph     | client          | Y           |
 
-## 1. 配置hosts主机（3节点一样）
+### 1. 配置hosts主机（3节点一样）
 
 vim /etc/hosts
 
@@ -39,7 +39,7 @@ ceph    ALL=(ALL)       NOPASSWD: ALL
 
 ![img](https://longlizl.github.io/ceph分布式集群/images/1.png)
 
-## 2. ssh 免密登录（主节点到2节点）
+### 2. ssh 免密登录（主节点到2节点）
 
 修改你管理节点上的 ~/.ssh/config ，以使未指定用户名时默认用你刚刚创建的用户名
 
@@ -65,7 +65,7 @@ chmod 600 config
 
 
 
-## 3. 配置chronyd时间同步
+### 3. 配置chronyd时间同步
 
 默认centos已安装chronyd服务，主节点默认时间是同步centos官方服务器时间。只需将其他2台客户端指向chrony的主节点
 
@@ -103,9 +103,9 @@ chronyc sources -v
 
 ![img](https://longlizl.github.io/ceph分布式集群/images/7.png)
 
-**二 ：ceph集群部署**
+## 二 ：ceph集群部署
 
-## 1. 主节点（ceph-admin）上安装部署工具 ceph-deploy
+### 1. 主节点（ceph-admin）上安装部署工具 ceph-deploy
 
 \# yum 配置其他依赖包 
 
@@ -170,7 +170,8 @@ vim ceph.conf
 
 ![img](https://longlizl.github.io/ceph分布式集群/images/9.png)
 
-**2. 通过 ceph-deploy部署工具 在各个节点安装ceph**
+### 2. 通过 ceph-deploy部署工具 
+   在各个节点安装ceph
 
 ![img](https://longlizl.github.io/ceph分布式集群/images/10.png)
 
@@ -194,15 +195,15 @@ yum provides '*/applydeltarpm'   yum install deltarpm -y
 
 解决办法都到对应节点下载相应包并更新epel-release为最新
 
-**3. 初始化 monitor 节点并收集所有密钥**
+### 3. 初始化 monitor 节点并收集所有密钥
 
 ceph-deploy mon create-initial
 
 ![img](https://longlizl.github.io/ceph分布式集群/images/14.png)
 
-**4. 添加2个OSD**
+### 4. 添加2个OSD
 
-1. 登录到 ceph-node-1,ceph-node-2 节点、并给 OSD 守护进程创建一个目录，并添加权限。
+   登录到 ceph-node-1,ceph-node-2 节点、并给 OSD 守护进程创建一个目录，并添加权限。
 
 ```shell
 ceph-node-1:
@@ -224,7 +225,7 @@ sudo chown -R ceph:ceph /opt/osd2/
 
 ![img](https://longlizl.github.io/ceph分布式集群/images/16.png)
 
-1.   从管理节点ceph-admin执行  prepare OSD 操作
+   从管理节点ceph-admin执行  prepare OSD 操作
 
 ```shell
 ceph-deploy osd prepare ceph-node-1:/opt/osd1 ceph-node-2:/opt/osd2
@@ -232,7 +233,7 @@ ceph-deploy osd prepare ceph-node-1:/opt/osd1 ceph-node-2:/opt/osd2
 
 ![img](https://longlizl.github.io/ceph分布式集群/images/17.png)
 
-1. 激活 activate OSD
+   激活 activate OSD
 
 ```shell
 ceph-deploy osd activate ceph-node-1:/opt/osd1 ceph-node-2:/opt/osd2
@@ -240,7 +241,7 @@ ceph-deploy osd activate ceph-node-1:/opt/osd1 ceph-node-2:/opt/osd2
 
 ![img](https://longlizl.github.io/ceph分布式集群/images/18.png)
 
-1. 通过 ceph-deploy admin 将配置文件和 admin 密钥同步到各个节点
+   通过 ceph-deploy admin 将配置文件和 admin 密钥同步到各个节点
 
 ```shell
 ceph-deploy admin ceph-admin ceph-node-1 ceph-node-2
@@ -248,13 +249,13 @@ ceph-deploy admin ceph-admin ceph-node-1 ceph-node-2
 
 ![img](https://longlizl.github.io/ceph分布式集群/images/19.png)
 
-1.  **确保你对 ceph.client.admin.keyring 有正确的操作权限**
+   确保你对 ceph.client.admin.keyring 有正确的操作权限
 
 sudo chmod +r /etc/ceph/ceph.client.admin.keyring
 
 ![img](https://longlizl.github.io/ceph分布式集群/images/20.png)
 
-1. **查看集群状态**
+   **查看集群状态**
 
 ```
 ceph health
@@ -284,7 +285,7 @@ ceph osd df
 
 ![img](https://longlizl.github.io/ceph分布式集群/images/24.png)
 
-**三: 扩展集群（扩容）**
+## 三: 扩展集群（扩容）
 
 **添加MONITORS**
 
@@ -294,7 +295,7 @@ ceph osd df
 
 ![img](https://longlizl.github.io/ceph分布式集群/images/25.png)
 
-1. 推送至其他节点：(注：因为之前将主节点也设置成了监控节点所以主节点也推送了配置)
+2. 推送至其他节点：(注：因为之前将主节点也设置成了监控节点所以主节点也推送了配置)
 
 ```shell
 ceph-deploy --overwrite-conf config push ceph-admin ceph-node-1 ceph-node-2
@@ -302,7 +303,7 @@ ceph-deploy --overwrite-conf config push ceph-admin ceph-node-1 ceph-node-2
 
 ![img](https://longlizl.github.io/ceph分布式集群/images/26.png)
 
-1. 添加监控节点:
+3. 添加监控节点:
 
 ```shell
 ceph-deploy mon add ceph-node-1
@@ -311,7 +312,7 @@ ceph-deploy mon add ceph-node-2
 
 
 
-1. 查看集群状态和监控节点：
+4. 查看集群状态和监控节点：
 
 集群状态
 
@@ -327,7 +328,7 @@ ceph mon stat
 
 ![img](https://longlizl.github.io/ceph分布式集群/images/27.png)
 
-**五: ceph-dash集群监控工具部署**
+## 五: ceph-dash集群监控工具部署
 
 在监控节点安装ceph-dash
 
