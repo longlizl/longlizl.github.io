@@ -14,6 +14,8 @@
 * K8S
   * [kubeadm快速部署一个集群](k8s\k8s集群kubeadm工具部署(1.22版).md)
   * [二进制部署一个高可用k8s集群](k8s\k8s高可用二进制部署.md)
+* ceph
+  * [ceph分布式集群](ceph分布式集群\ceph分布式集群.md)
 * kali渗透
   * 端口探测扫描
     * [nc用法](kali相关\端口探测扫描\nc传输文件端口扫描硬盘克隆.md)
