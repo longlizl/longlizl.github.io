@@ -312,8 +312,8 @@ Kubernetes API，集群的统一入口，各组件协调者，以RESTful API提�
        "names": [
            {
                "C": "CN",
-               "L": "BeiJing",
-               "ST": "BeiJing",
+               "L": "WH",
+               "ST": "WH",
                "O": "k8s",
                "OU": "System"
            }
