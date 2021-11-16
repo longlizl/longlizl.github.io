@@ -14,6 +14,8 @@
 * K8S
   * [kubeadm快速部署一个集群](k8s\k8s集群kubeadm工具部署(1.22版).md)
   * [二进制部署一个高可用k8s集群](k8s\k8s高可用二进制部署.md)
+* openldap
+  * [openldap安装配置](openldap\openldap环境搭建与配置.md)
 * ceph
   * [ceph分布式集群](ceph分布式集群\ceph分布式集群.md)
 * kali渗透
