@@ -107,8 +107,8 @@ hostnamectl set-hostname hadoop-master（设置完后断开会话重新进入即
 vim /etc/hosts 
 
 ```shell
-192.168.205.175	hadoop-master 
-192.168.205.180	hadoop-node-1 
+192.168.205.175 hadoop-master 
+192.168.205.180 hadoop-node-1 
 192.168.205.185 hadoop-node-2
 ```
 
