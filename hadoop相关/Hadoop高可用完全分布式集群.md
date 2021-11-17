@@ -86,22 +86,31 @@
 
 # 一.环境准备
 
-> - Hadoop Master：192.168.205.175（hadoop-master） hostname:hadoop-master
-> - Hadoop Slave：192.168.205.180（hadoop-slave-1）   hostname:hadoop-node-1
-> - Hadoop Slave：192.168.205.185（hadoop-slave-2）   hostname:hadoop-node-2
-> - JDK1.8版本，系统：centos8.2.2004
+```shell
+Hadoop Master：192.168.205.175（hadoop-master） hostname:hadoop-master
+Hadoop Slave：192.168.205.180（hadoop-slave-1） hostname:hadoop-node-1
+Hadoop Slave：192.168.205.185（hadoop-slave-2） hostname:hadoop-node-2
+JDK1.8版本，系统：centos8.2.2004
+```
+
+
 
 - 各个节点都设置对应hostname及hosts主机与ip的映射关系
 
-> 现以hadoop-master这台主节点为例，其他节点按照主节点设置即可：
-> hostnamectl set-hostname hadoop-master（设置完后断开会话重新进入即可）
+```
+现以hadoop-master这台主节点为例，其他节点按照主节点设置即可：
+hostnamectl set-hostname hadoop-master（设置完后断开会话重新进入即可）
+```
 
 - 设置ip与主机名的映射关系：
 
-> vim /etc/hosts
-> 192.168.205.175	hadoop-master
-> 192.168.205.180	hadoop-node-1
-> 192.168.205.185    hadoop-node-2
+vim /etc/hosts 
+
+```shell
+192.168.205.175	hadoop-master 
+192.168.205.180	hadoop-node-1 
+192.168.205.185 hadoop-node-2
+```
 
 ## 1. JDK安装，环境变量配置
 

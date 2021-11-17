@@ -35,7 +35,7 @@ yum -y install openldap compat-openldap openldap-clients openldap-servers openld
 ```shell
 vim /etc/openldap/slapd.d/cn=config/olcDatabase\=\{2\}hdb.ldif
 olcSuffix: dc=test,dc=com
-olcRootDN: cn=admini,dc=test,dc=com
+olcRootDN: cn=admin,dc=test,dc=com
 olcRootPW: {SSHA}iuteV+jmpnQul9byuSdckSPK4olCz2ax
 ```
 
