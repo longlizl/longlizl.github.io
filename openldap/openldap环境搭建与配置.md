@@ -39,7 +39,7 @@ olcRootDN: cn=admin,dc=test,dc=com
 olcRootPW: {SSHA}iuteV+jmpnQul9byuSdckSPK4olCz2ax
 ```
 
-![image-20211116142703342](https://longlizl.github.io/images/1.png)
+![image-20211116142703342](https://longlizl.github.io/openldap/images/1.png)
 
 ### 2.3 修改olcDatabase={1}monitor.ldif文件
 
@@ -47,7 +47,7 @@ olcRootPW: {SSHA}iuteV+jmpnQul9byuSdckSPK4olCz2ax
 vim /etc/openldap/slapd.d/cn=config/olcDatabase\=\{1\}monitor.ldif
 ```
 
-![image-20211116142801019](https://longlizl.github.io/images/2.png)
+![image-20211116142801019](https://longlizl.github.io/openldap/images/2.png)
 
 注意：该修改中的dn.base是修改OpenLDAP的管理员的相关信息的。
 
@@ -68,7 +68,7 @@ systemctl start slapd
 systemctl status slapd
 ```
 
-![image-20211116141230808](https://longlizl.github.io/images/3.png)
+![image-20211116141230808](https://longlizl.github.io/openldap/images/3.png)
 
 OpenLDAP默认监听的端口是389，下面我们来看下是不是389端口，如下：
 
@@ -117,7 +117,7 @@ migrate_common.ph文件主要是用于生成ldif文件使用，修改migrate_com
 vim /usr/share/migrationtools/migrate_common.ph +71
 ```
 
-![image-20211116143251773](https://longlizl.github.io/images/4.png)
+![image-20211116143251773](https://longlizl.github.io/openldap/images/4.png)
 
 到此OpenLDAP的配置就已经全部完毕，下面我们来开始添加用户到OpenLDAP中。
 
@@ -169,7 +169,7 @@ grep ":10[0-9][0-9]" /etc/group > /root/groups
 
 以/root/users.ldif文件为例，groups.ldif同users.ldif
 
-![image-20211116154317855](https://longlizl.github.io/images/5.png)
+![image-20211116154317855](https://longlizl.github.io/openldap/images/5.png)
 
 **四.导入用户及用户组到OpenLDAP数据库**
 
@@ -205,7 +205,7 @@ EOF
 
 注base.ldif文件格式如下若格式不对请更改有效格式
 
-![image-20211116144428792](https://longlizl.github.io/images/6.png)
+![image-20211116144428792](https://longlizl.github.io/openldap/images/6.png)
 
 导入基础数据库，使用如下命令：（"123456"为最初设置的root管理员密码）
 
@@ -272,7 +272,7 @@ ll /var/lib/ldap/
 ldapsearch -x -b "dc=test,dc=com" -H ldap://127.0.0.1
 ```
 
-![image-20211116143417872](https://longlizl.github.io/images/7.png)
+![image-20211116143417872](https://longlizl.github.io/openldap/images/7.png)
 
 查询添加的OpenLDAP用户信息，使用如下命令：
 
@@ -352,9 +352,9 @@ memberUid: test1
 
 **六.使用LDAPADMIN工具（windows客户端）**
 
-![image-20211116152453827](https://longlizl.github.io/images/8.png)
+![image-20211116152453827](https://longlizl.github.io/openldap/images/8.png)
 
-![image-20211116161612567](https://longlizl.github.io/images/9.png)
+![image-20211116161612567](https://longlizl.github.io/openldap/images/9.png)
 
 **七.OpenLDAP客户端配置，实现用户认证**
 
@@ -378,9 +378,9 @@ openldap，主要包含了OpenLDAP所必须的库文件，当通过pam验证时�
 authconfig-tui
 ```
 
-![img](https://longlizl.github.io/images/10.png)
+![img](https://longlizl.github.io/openldap/images/10.png)
 
-![img](https://longlizl.github.io/images/11.png)
+![img](https://longlizl.github.io/openldap/images/11.png)
 
 可以验证下配置文件都是否生效
 
@@ -388,31 +388,31 @@ authconfig-tui
 vim /etc/openldap/ldap.conf
 ```
 
-![img](https://longlizl.github.io/images/12.png)
+![img](https://longlizl.github.io/openldap/images/12.png)
 
 ```shell
 vim /etc/nsswitch.conf
 ```
 
-![img](https://longlizl.github.io/images/13.png)
+![img](https://longlizl.github.io/openldap/images/13.png)
 
 ```shell
 vim /etc/pam.d/system-auth
 ```
 
-![img](https://longlizl.github.io/images/14.png)
+![img](https://longlizl.github.io/openldap/images/14.png)
 
 ```shell
 vim /etc/pam.d/password-auth
 ```
 
-![img](https://longlizl.github.io/images/15.png)
+![img](https://longlizl.github.io/openldap/images/15.png)
 
 ```shell
 vim /etc/sysconfig/authconfig
 ```
 
-![img](https://longlizl.github.io/images/16.png)
+![img](https://longlizl.github.io/openldap/images/16.png)
 
 增加下面一行让ldap认证的用户自己创建家目录
 
@@ -421,7 +421,7 @@ vim /etc/pam.d/sshd
 session    required     pam_mkhomedir.so
 ```
 
-![img](https://longlizl.github.io/images/17.png)
+![img](https://longlizl.github.io/openldap/images/17.png)
 
 ```shell
 systemctl restart nslcd
@@ -429,8 +429,8 @@ systemctl restart nslcd
 
 通过xhell连接访问验证ldap连接
 
-![img](https://longlizl.github.io/images/18.png)
+![img](https://longlizl.github.io/openldap/images/18.png)
 
-![img](https://longlizl.github.io/images/19.png)
+![img](https://longlizl.github.io/openldap/images/19.png)
 
-![img](https://longlizl.github.io/images/20.png)
+![img](https://longlizl.github.io/openldap/images/20.png)
