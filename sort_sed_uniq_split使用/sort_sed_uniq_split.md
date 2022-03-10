@@ -111,7 +111,7 @@ sed -i '/allow linux.com/a\allow linux.cn' the.conf.file #匹配行后插入一�
 echo '[xxx12x3rrt5xxx]' | sed  's/\[[^][]*\]/[]/g'
 ```
 
-![img](D:\software\youdao_file\weixinobU7Vji2jSDT8WUoQ-GPtcbtUpic\22ad0ac05168498aaae249c0c466a1cc\clipboard.png)
+![img](https://longlizl.github.io/sort_sed_uniq_split使用/images/clipboard.png)
 
 ## 17.在多少行前后插入数据
 
