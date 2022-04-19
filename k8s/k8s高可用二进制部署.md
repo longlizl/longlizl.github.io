@@ -817,7 +817,7 @@ etcd-2               Healthy   {"health":"true"}
    # 将之前生成的kube-proxy证书拷贝到/opt/kubernetes/ssl中
    cp /opt/ssl/k8s/kube*.pem /opt/kubernetes/ssl/
    # 生成kube-proxy.kubeconfig配置文件（master节点上操作）
-   # KUBE_APISERVER="https://192.168.31.71:6443" 这里之前设置过，如果机器重启请重新设置下
+   # KUBE_APISERVER="https://192.168.205.150:6443" 这里之前设置过，如果机器重启请重新设置下
    cd /opt/kubernetes/conf
    kubectl config set-cluster kubernetes \
      --certificate-authority=/opt/kubernetes/ssl/ca.pem \
