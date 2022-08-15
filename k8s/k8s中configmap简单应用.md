@@ -139,7 +139,7 @@ spec:
           # 挂载nginx配置
           - name: confnginx
             mountPath: /etc/nginx/conf.d
-            readOnly: true #只有
+            readOnly: true #只读权限
 #            subPath: index.html
 #          - name: config
 #            mountPath: /etc/nginx/nginx.conf
