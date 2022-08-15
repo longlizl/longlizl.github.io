@@ -14,6 +14,8 @@
 * K8S
   * [kubeadm快速部署一个集群](k8s\k8s集群kubeadm工具部署(1.22版).md)
   * [二进制部署一个高可用k8s集群](k8s\k8s高可用二进制部署.md)
+  * [pv与pvc应用](k8s\k8s存储pv与pvc应用.md)
+  * [configmap简单应用](k8s\k8s中configmap简单应用.md)
 * openldap
   * [openldap安装配置](openldap\openldap环境搭建与配置.md)
 * ceph
@@ -72,8 +74,8 @@
     * [shell连接mysql](mysql相关\shell脚本操作mysql\shell脚本连接mysql.md)
   * [mysql联合索引](mysql相关\联合唯一索引.md)
   * mysql表碎片空间整理
-    * [碎片整理](mysql相关\mysql表空间碎片整理\表空间碎片整理.md)
-    * [mysql表空间碎片shell脚本](mysql相关\mysql表空间碎片整理\mysql表碎片空间整理脚本.md)
+    * [碎片整理](mysql表空间碎片整理\表空间碎片整理.md)
+    * [mysql表空间碎片shell脚本](mysql表空间碎片整理\mysql表碎片空间整理脚本.md)
   * [查看锁,事务,进程](mysql相关\查看锁表_等待锁_事务_进程_批量结束进程.md)
   * [慢查询检测与记录](mysql相关\慢查询检测与记录.md)
   * [mysql忘记密码解决办法](mysql相关\MySql忘记密码解决办法.md)
