@@ -75,8 +75,8 @@
     * [shell连接mysql](mysql相关\shell脚本操作mysql\shell脚本连接mysql.md)
   * [mysql联合索引](mysql相关\联合唯一索引.md)
   * mysql表碎片空间整理
-    * [碎片整理](mysql表空间碎片整理\表空间碎片整理.md)
-    * [mysql表空间碎片shell脚本](mysql表空间碎片整理\mysql表碎片空间整理脚本.md)
+    * [碎片整理](mysql相关\mysql表空间碎片整理\表空间碎片整理.md)
+    * [mysql表空间碎片shell脚本](mysql相关\mysql表空间碎片整理\mysql表碎片空间整理脚本.md)
   * [查看锁,事务,进程](mysql相关\查看锁表_等待锁_事务_进程_批量结束进程.md)
   * [慢查询检测与记录](mysql相关\慢查询检测与记录.md)
   * [mysql忘记密码解决办法](mysql相关\MySql忘记密码解决办法.md)
