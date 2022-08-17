@@ -16,6 +16,7 @@
   * [二进制部署一个高可用k8s集群](k8s\k8s高可用二进制部署.md)
   * [pv与pvc应用](k8s\k8s存储pv与pvc应用.md)
   * [configmap简单应用](k8s\k8s中configmap简单应用.md)
+  * [弹性伸缩HPA应用](k8s\弹性伸缩HPA应用.md)
 * openldap
   * [openldap安装配置](openldap\openldap环境搭建与配置.md)
 * ceph
