@@ -17,6 +17,8 @@
   * [pv与pvc应用](k8s\k8s存储pv与pvc应用.md)
   * [configmap简单应用](k8s\k8s中configmap简单应用.md)
   * [弹性伸缩HPA应用](k8s\弹性伸缩HPA应用.md)
+  * [NFS默认存储](k8s\NFS默认存储.md)
+  * [kubesphere管理工具安装](k8s\kubesphere管理工具安装.md)
 * openldap
   * [openldap安装配置](openldap\openldap环境搭建与配置.md)
 * ceph
