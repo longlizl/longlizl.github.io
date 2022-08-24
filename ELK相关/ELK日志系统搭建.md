@@ -373,10 +373,10 @@ curl 192.168.205.132:9200/_cat/indices?v
 
 2. 下载安装logstash
 
-> ```shell
-> wget -c https://artifacts.elastic.co/downloads/logstash/logstash-7.14.0-x86_64.rpm 
-> rpm-ivh logstash-7.14.0-x86_64.rpm
-> ```
+   > ```shell
+   > wget -c https://artifacts.elastic.co/downloads/logstash/logstash-7.14.0-x86_64.rpm 
+   > rpm-ivh logstash-7.14.0-x86_64.rpm
+   > ```
 
 3. 配置logstash
 
