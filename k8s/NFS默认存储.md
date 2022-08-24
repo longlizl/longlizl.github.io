@@ -137,10 +137,6 @@ metadata:
     storageclass.kubernetes.io/is-default-class: "true"
 provisioner: storage.pri/nfs
 reclaimPolicy: Delete
-parameters:
-  server: 192.168.205.150
-  path: /opt/kubesphere/data
-  readOnly: "false"
 EOF
 kubectl apply -f storageclass-nfs.yaml
 # 查看pvc信息
