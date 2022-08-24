@@ -175,9 +175,218 @@ curl 192.168.205.132:9200/_cat/indices?v
    其中索引分片默认为5分片1副本，其中绿色方块边框未加粗的为副本分片
 ## 三. kibana安装
 
-kibana:
-	pass
-............
-............
-............	
+1. 下载安装kibana
+
+   > kibana:
+   >
+   > ```shell
+   > # 下载安装
+   > curl -L -O https://artifacts.elastic.co/downloads/kibana/kibana-7.14.0-x86_64.rpm
+   > rpm -ivh kibana-7.14.0-x86_64.rpm
+   > # 修改配置
+   > vim /etc/kibana/kibana.yml
+   > server.port: 5601
+   > server.host: "192.168.205.135"
+   > # elasticsearch集群中所有可能成为master的节点列表
+   > elasticsearch.hosts: ["http://192.168.205.132:9200","http://192.168.205.133:9200","http://192.168.205.134:9200"]
+   > ```
+
+2. 启动并访问kibana
+
+   >  启动kibana:
+   >
+   >  ```shell
+   >  systemctl enable kibana
+   >  systemctl start kibana
+   >  ```
+   >
+   >  访问kibana:
+
+  ![image-20210826110536218](https://longlizl.github.io/ELK相关/images/6.png)
+
+## 四. redis安装
+
+1. 下载安装redis
+
+   > 这里缓存队列只安装单机作为演示，有条件可以安装集群
+   >
+   > redis:
+   >
+   > ```shell
+   > # 系统内核参数设置
+   > cat >>/etc/sysctl.conf << "EOF"
+   > net.core.somaxconn=1024
+   > vm.overcommit_memory=1
+   > EOF
+   > sysctl -p
+   > # 此设置需要重启服务器生效
+   > cat >> /etc/rc.local << "EOF"
+   > echo "never" > /sys/kernel/mm/transparent_hugepage/enabled
+   > EOF
+   > chmod a+x /etc/rc.d/rc.local
+   > # 下载redis
+   > yum -y install gcc
+   > mkdir -p /usr/local/redis/{log,data,conf}
+   > curl -L -O https://download.redis.io/releases/redis-5.0.13.tar.gz
+   > tar -zxvf redis-5.0.13.tar.gz
+   > # 编译安装
+   > cd redis-5.0.13 && make -j2
+   > cd src && make install PREFIX=/usr/local/redis
+   > cd ../ && cp redis.conf /usr/local/redis/conf
+   > ```
+
+
+2. 配置redis
+
+   > ```shell
+   > # 修改配置如下
+   > vim /usr/local/redis/redis.conf
+   > bind 192.168.205.137
+   > port 6379
+   > daemonize yes
+   > logfile "/usr/local/redis/log/redis.log"
+   > dir "/usr/local/redis/data"
+   > appendonly yes
+   > requirepass 111111
+   > ```
+
+3. 启动redis
+
+   > ```shell
+   > # 启动redis
+   > cd /usr/local/redis/
+   > bin/redis-server /usr/local/redis/conf/redis.conf
+   > ```
+
+## 五. filebeat安装
+
+​	安装filebeat前已经提前在需要收集日志的服务器安装好了nginx和tomcat
+
+1. 下载filebeat
+
+   > filebeat:
+   >
+   > ```shell
+   > # 下载安装
+   > curl -L -O https://artifacts.elastic.co/downloads/beats/filebeat/filebeat-7.14.0-x86_64.rpm
+   > rpm -ivh filebeat-7.14.0-x86_64.rpm
+   > ```
+
+2. 配置filebeat
+
+   > 1. 配置filebeat采集nginx和tomcat日志
+   >
+   >    ```yaml
+   >    cp /etc/filebeat/filebeat.yml /etc/filebeat/filebeat.yml.bak
+   >    vim /etc/filebeat/filebeat.yml
+   >    # ============================== Filebeat inputs ===============================
+   >    
+   >    filebeat.inputs:
+   >    - type: log
+   >      enabled: true
+   >      paths:
+   >        - /var/log/nginx/access.log
+   >      fields:
+   >        web: nginx-access
+   >      fields_under_root: true
+   >    
+   >    - type: log
+   >      enabled: true
+   >      paths:
+   >        - /var/log/nginx/error.log
+   >      fields:
+   >        web: nginx-error
+   >      fields_under_root: true
+   >    
+   >    - type: log
+   >      enabled: true
+   >      paths:
+   >        - /opt/apache-tomcat-10.0.10/logs/catalina.out
+   >      fields:
+   >        web: tomcat-log
+   >      fields_under_root: true
+   >      # Multiline options
+   >      multiline.type: pattern
+   >      multiline.pattern: ^\[
+   >      multiline.negate: true
+   >      multiline.match: after
+   >    
+   >    # ------------------------------ 日志配置 -----------------------------------
+   >    
+   >    logging.level: info
+   >    logging.to_files: true
+   >    logging.files:
+   >      path: /var/log/filebeat
+   >      name: filebeat
+   >      keepfiles: 7
+   >      permissions: 0644
+   >    
+   >    # ------------------------------ Redis Output -------------------------------
+   >    
+   >    output.redis:
+   >    hosts: ["192.168.205.137:6379"]
+   >    password: "111111"
+   >    key: "filebeat"
+   >    db: 0
+   >    ```
+
+
+3. 启动filebeat
+
+   > ```shell
+   > systemctl start filebeat
+   > systemctl enable filebeat
+   > ```
+
+3. 查看日志数据是否输出到redis
+
+   > ```shell
+   > # 查看key的value列表1-5范围的值
+   > [root@redis redis]# bin/redis-cli -h 192.168.205.137 -a 111111
+   > Warning: Using a password with '-a' or '-u' option on the command line interface may not be safe.
+   > 192.168.205.137:6379> KEYS *
+   > 1) "filebeat"
+   > 192.168.205.137:6379> LLEN filebeat
+   > (integer) 10
+   > 192.168.205.137:6379> LRANGE filebeat 1 5
+   > 1) "{\"@timestamp\":\"2021-08-26T08:17:32.965Z\",\"@metadata\":{\"beat\":\"filebeat\",\"type\":\"_doc\",\"version\":\"7.14.0\"},\"agent\":{\"name\":\"filebeat-01\",\"type\":\"filebeat\",\"version\":\"7.14.0\",\"hostname\":\"filebeat-01\",\"ephemeral_id\":\"60f9f9be-f50c-455a-a254-d689e818b156\",\"id\":\"dca8adca-31b9-4df8-8c0d-3f5314dfd0a6\"},\"log\":{\"file\":{\"path\":\"/var/log/nginx/error.log\"},\"offset\":71},\"message\":\"2021/08/26 15:09:42 [notice] 1654#1654: nginx/1.20.1\",\"input\":{\"type\":\"log\"},\"web\":\"nginx-error\",\"ecs\":{\"version\":\"1.10.0\"},\"host\":{\"name\":\"filebeat-01\"}}"
+   > 2) "{\"@timestamp\":\"2021-08-26T08:17:32.965Z\",\"@metadata\":{\"beat\":\"filebeat\",\"type\":\"_doc\",\"version\":\"7.14.0\"},\"log\":{\"offset\":124,\"file\":{\"path\":\"/var/log/nginx/error.log\"}},\"message\":\"2021/08/26 15:09:42 [notice] 1654#1654: built by gcc 4.8.5 20150623 (Red Hat 4.8.5-44) (GCC) \",\"input\":{\"type\":\"log\"},\"web\":\"nginx-error\",\"ecs\":{\"version\":\"1.10.0\"},\"host\":{\"name\":\"filebeat-01\"},\"agent\":{\"id\":\"dca8adca-31b9-4df8-8c0d-3f5314dfd0a6\",\"name\":\"filebeat-01\",\"type\":\"filebeat\",\"version\":\"7.14.0\",\"hostname\":\"filebeat-01\",\"ephemeral_id\":\"60f9f9be-f50c-455a-a254-d689e818b156\"}}"
+   > 3) "{\"@timestamp\":\"2021-08-26T08:17:32.965Z\",\"@metadata\":{\"beat\":\"filebeat\",\"type\":\"_doc\",\"version\":\"7.14.0\"},\"ecs\":{\"version\":\"1.10.0\"},\"log\":{\"offset\":218,\"file\":{\"path\":\"/var/log/nginx/error.log\"}},\"message\":\"2021/08/26 15:09:42 [notice] 1654#1654: OS: Linux 3.10.0-1160.36.2.el7.x86_64\",\"input\":{\"type\":\"log\"},\"web\":\"nginx-error\",\"host\":{\"name\":\"filebeat-01\"},\"agent\":{\"id\":\"dca8adca-31b9-4df8-8c0d-3f5314dfd0a6\",\"name\":\"filebeat-01\",\"type\":\"filebeat\",\"version\":\"7.14.0\",\"hostname\":\"filebeat-01\",\"ephemeral_id\":\"60f9f9be-f50c-455a-a254-d689e818b156\"}}"
+   > 4) "{\"@timestamp\":\"2021-08-26T08:17:32.965Z\",\"@metadata\":{\"beat\":\"filebeat\",\"type\":\"_doc\",\"version\":\"7.14.0\"},\"log\":{\"file\":{\"path\":\"/var/log/nginx/error.log\"},\"offset\":296},\"message\":\"2021/08/26 15:09:42 [notice] 1654#1654: getrlimit(RLIMIT_NOFILE): 1024:4096\",\"input\":{\"type\":\"log\"},\"web\":\"nginx-error\",\"ecs\":{\"version\":\"1.10.0\"},\"host\":{\"name\":\"filebeat-01\"},\"agent\":{\"name\":\"filebeat-01\",\"type\":\"filebeat\",\"version\":\"7.14.0\",\"hostname\":\"filebeat-01\",\"ephemeral_id\":\"60f9f9be-f50c-455a-a254-d689e818b156\",\"id\":\"dca8adca-31b9-4df8-8c0d-3f5314dfd0a6\"}}"
+   > 5) "{\"@timestamp\":\"2021-08-26T08:17:32.965Z\",\"@metadata\":{\"beat\":\"filebeat\",\"type\":\"_doc\",\"version\":\"7.14.0\"},\"input\":{\"type\":\"log\"},\"web\":\"nginx-error\",\"ecs\":{\"version\":\"1.10.0\"},\"host\":{\"name\":\"filebeat-01\"},\"agent\":{\"version\":\"7.14.0\",\"hostname\":\"filebeat-01\",\"ephemeral_id\":\"60f9f9be-f50c-455a-a254-d689e818b156\",\"id\":\"dca8adca-31b9-4df8-8c0d-3f5314dfd0a6\",\"name\":\"filebeat-01\",\"type\":\"filebeat\"},\"log\":{\"offset\":372,\"file\":{\"path\":\"/var/log/nginx/error.log\"}},\"message\":\"2021/08/26 15:09:42 [notice] 1655#1655: start worker processes\"}"
+   > ```
+
+## 六. logstash安装   
+
+1. 安装java环境
+
+   > ```shell
+   > # 上次jdk1安装包
+   > tar -zxvf jdk-11.0.12_linux-x64_bin.tar.gz && mv jdk-11.0.12 /usr/local/jdk
+   > cat >> /etc/profile << "EOF"
+   > export JAVA_HOME=/usr/local/jdk
+   > export CLASSPATH=.:$JAVA_HOME/lib/dt.jar:$JAVA_HOME/lib/tools.jar
+   > export PATH=$JAVA_HOME/bin:$PATH
+   > EOF
+   > source /etc/profile
+   > ```
+
+2. 下载安装logstash
+
+> ```shell
+> wget -c https://artifacts.elastic.co/downloads/logstash/logstash-7.14.0-x86_64.rpm 
+> rpm-ivh logstash-7.14.0-x86_64.rpm
+> ```
+
+3. 配置logstash
+
+   > ```
+   > 
+   > ```
+   >
+   > 
+
+   
+
+4.  	
 
