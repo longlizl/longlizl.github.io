@@ -32,6 +32,8 @@
   * 木马制作
     * [msfvenom生成后门木马](kali相关\木马制作\msfvenom生成后门木马文件.md)
     * [weevely生成图片木马](kali相关\木马制作\weevely生成图片木马.md)
+  * kali破解wifi密码
+    * [wifi密码破解](kali相关\kail破解wifi密码\wifi密码破解.md)
   * 永恒之蓝漏洞
     * [永恒之蓝](kali相关\永恒之蓝漏洞\kali利用永恒之蓝漏洞入侵win7系统.md)
   * arp欺骗
