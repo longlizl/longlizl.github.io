@@ -19,6 +19,7 @@
   * [弹性伸缩HPA应用](k8s\弹性伸缩HPA应用.md)
   * [NFS默认存储](k8s\NFS默认存储.md)
   * [kubesphere管理工具安装](k8s\kubesphere管理工具安装.md)
+  * [删除namespace资源后一直处于terminating状态解决方法](k8s\k8s中namespace资源一直terminating问题解决.md)
 * openldap
   * [openldap安装配置](openldap\openldap环境搭建与配置.md)
 * ceph
