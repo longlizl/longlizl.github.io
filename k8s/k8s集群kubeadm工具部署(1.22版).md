@@ -135,7 +135,7 @@ EOF
   2.3 安装kubeadm,kubelet,kubectl
 
 ```shell
-yum -y install kubelet kubeadm kubectl
+yum -y install kubelet-1.22.2 kubeadm-1.22.2 kubectl-1.22.2
 systemctl enable kubelet  
 ```
 
