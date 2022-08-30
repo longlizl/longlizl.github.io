@@ -120,7 +120,7 @@ kubectl logs -n kubesphere-system $(kubectl get pod -n kubesphere-system -l 'app
 
 ```
 
-![image-20220818180057694](https://longlizl.github.io/k8s/images/6.png)
+![image-20220818180057694](https://longlizl.github.io/k8s/images/16.png)
 
 如果中途安装失败报如下错误信息（此错误会在重新安装服务时候会遇到）
 
@@ -165,4 +165,4 @@ drwxrwxrwx 3 root root 27 8月  23 17:47 kubesphere-monitoring-system-prometheus
 
 http://192.168.205.150:30880/
 
-![image-20220819164826137](https://longlizl.github.io/k8s/images/7.png)
+![image-20220819164826137](https://longlizl.github.io/k8s/images/17.png)
